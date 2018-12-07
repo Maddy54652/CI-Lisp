@@ -5,6 +5,12 @@ Hello! Welcome to my CI Lisp Project!
 
 This may take a while to complete. Updates and code will be posted here.
 
+12.6.18
+
+Currently working on Task 2. The code has finally been uploaded on here. Does it compile? Sort of. Does it do what it is supposed to?
+No, not really.
+
+
 Progress:
 TASK 1-COMPLETE
 TASK 2-IN PROGRESS
