@@ -1,0 +1,26 @@
+
+> (let(a 1)(b 2))
+lex: LPAREN
+
+yacc: s_expr ::= error
+ERROR: syntax error
+yacc: s_expr ::= error
+
+lex: LPAREN
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: SYMBOL sval = a
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+lex: NUMBER dval = 1.000000
+
+ERROR: unexpected token
+yacc: s_expr ::= error
+lex: RPAREN
+
+Process finished with exit code 0
