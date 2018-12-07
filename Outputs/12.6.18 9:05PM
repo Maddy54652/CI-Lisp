@@ -1,0 +1,18 @@
+> (add(1 2))
+
+lex: LPAREN
+ERROR: syntax error
+
+lex: FUNC sval = add
+ERROR: unexpected token
+lex: LPAREN
+
+ERROR: unexpected token
+lex: NUMBER dval = 1.000000
+yacc: s_expr ::= NUMBER
+lex: NUMBER dval = 2.000000
+yacc: s_expr ::= error
+yacc: s_expr ::= error
+lex: RPAREN
+
+Process finished with exit code 0
