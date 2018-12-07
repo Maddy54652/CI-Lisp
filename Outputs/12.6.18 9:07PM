@@ -1,0 +1,33 @@
+> (add 1 2)
+lex: LPAREN
+lex: FUNC sval = add
+lex: NUMBER dval = 1.000000
+yacc: s_expr ::= NUMBER
+lex: NUMBER dval = 2.000000
+yacc: s_expr ::= NUMBER
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr expr RPAREN
+lex: EOL
+yacc: program ::= s_expr EOL
+3.000000
+> (let a 1)
+
+ERROR: syntax error
+
+lex: LPAREN
+ERROR: unexpected token
+
+yacc: s_expr ::= error
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: SYMBOL sval = a
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: NUMBER dval = 1.000000
+ERROR: unexpected token
+yacc: s_expr ::= error
+lex: RPAREN
+
+Process finished with exit code 0
