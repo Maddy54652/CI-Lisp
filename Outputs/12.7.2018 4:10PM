@@ -1,0 +1,15 @@
+
+> (let)
+lex: LPAREN
+
+yacc: s_expr ::= error
+ERROR: syntax error
+yacc: s_expr ::= error
+
+lex: RPAREN
+ERROR: unexpected token
+
+ERROR: unexpected token
+ran scope
+
+Process finished with exit code 0
