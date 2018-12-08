@@ -1,0 +1,83 @@
+
+> (add 3 4)
+lex: LPAREN
+lex: FUNC sval = add
+lex: NUMBER dval = 3.000000
+yacc: s_expr ::= NUMBER
+lex: NUMBER dval = 4.000000
+ran number function
+yacc: s_expr ::= NUMBER
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr expr RPAREN
+lex: EOL
+ran number function
+yacc: program ::= s_expr EOL
+7.000000
+> sub(3 1)
+
+ERROR: syntax error
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+> lex: FUNC sval = sub
+yacc: s_expr ::= error
+yacc: s_expr ::= error
+lex: LPAREN
+yacc: s_expr ::= error
+lex: NUMBER dval = 3.000000
+yacc: s_expr ::= error
+lex: NUMBER dval = 1.000000
+yacc: s_expr ::= error
+lex: RPAREN
+yacc: s_expr ::= error
+lex: EOL
+yacc: program ::= s_expr EOL
+(sub 3 5)
+lex: LPAREN
+ran number function
+lex: FUNC sval = sub
+ran number function
+lex: NUMBER dval = 3.000000
+-2.000000
+yacc: s_expr ::= NUMBER
+> lex: NUMBER dval = 5.000000
+yacc: s_expr ::= NUMBER
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr expr RPAREN
+lex: EOL
+yacc: program ::= s_expr EOL
+(sub 2 (add 4 5))
+ran number function
+ran number function
+ran number function
+-7.000000
+lex: LPAREN
+> lex: FUNC sval = sub
+lex: NUMBER dval = 2.000000
+yacc: s_expr ::= NUMBER
+lex: LPAREN
+lex: FUNC sval = add
+lex: NUMBER dval = 4.000000
+yacc: s_expr ::= NUMBER
+lex: NUMBER dval = 5.000000
+yacc: s_expr ::= NUMBER
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr expr RPAREN
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr expr RPAREN
+lex: EOL
+yacc: program ::= s_expr EOL
+quit
+yacc: s_expr ::= QUIT
+
+Process finished with exit code 0
