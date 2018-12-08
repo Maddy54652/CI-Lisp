@@ -1,0 +1,22 @@
+> (let a 1)
+
+ERROR: syntax error
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+lex: LPAREN
+yacc: s_expr ::= error
+yacc: s_expr ::= error
+lex: SYMBOL sval = a
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+ran scope
+lex: NUMBER dval = 1.000000
+yacc: s_expr ::= error
+lex: RPAREN
+
+Process finished with exit code 0
