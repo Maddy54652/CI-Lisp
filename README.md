@@ -11,6 +11,10 @@ Currently working on Task 2. The code has finally been uploaded on here. Does it
 No, not really.
 
 
+12.8.18
+
+Task 2: updated symbol_node to allow doubles and altered symbol function to accompany this change.
+
 Progress:
 TASK 1-COMPLETE
 TASK 2-IN PROGRESS
