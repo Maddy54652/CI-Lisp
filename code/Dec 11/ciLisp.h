@@ -72,6 +72,11 @@ typedef struct symbol_table_node{
     struct symbol_table_node *prev;
 }SYMBOL_TABLE_NODE;
 
+typedef struct symbol_table{
+    SYMBOL_TABLE_NODE* head;
+    SYMBOL_TABLE_NODE* tail;
+}SYMBOL_TABLE;
+
 typedef struct scope{
     struct ast_node* theList;
     struct ast_node* sExpr;
@@ -89,6 +94,12 @@ typedef struct ast_node {
     } data;
 } AST_NODE;
 
+
+//the symbol table is used to keep track of symbols and values
+SYMBOL_TABLE* symbolTable;
+
+//currentNode keeps the spot in the symbol table
+SYMBOL_TABLE_NODE* currentNode;
 
 AST_NODE *number(double value);
 
