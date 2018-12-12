@@ -14,7 +14,7 @@
 %token <sval> SYMBOL
 %token LPAREN RPAREN EOL QUIT LET
 
-%type <astNode> f_expr s_expr let_list scope
+%type <astNode> f_expr s_expr let_list scope let_elem
 %%
 
 program:
