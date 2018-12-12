@@ -1,0 +1,116 @@
+> (add(let(abc))(sub 3 abc)) 4)
+lex: LPAREN
+
+lex: FUNC sval = add
+ERROR: syntax error
+lex: LPAREN
+
+yacc: s_expr ::= error
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: LPAREN
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: SYMBOL sval = abc
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: RPAREN
+ERROR: unexpected token
+lex: RPAREN
+ran scope
+yacc: s_expr ::= LPAREN FUNC expr RPAREN
+
+lex: LPAREN
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: FUNC sval = sub
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: NUMBER dval = 3.000000
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: SYMBOL sval = abc
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: RPAREN
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: RPAREN
+ERROR: unexpected token
+yacc:
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+>  s_expr ::= error
+lex: NUMBER dval = 4.000000
+yacc: s_expr ::= error
+lex: RPAREN
+yacc: s_expr ::= error
+lex: EOL
+yacc: program ::= s_expr EOL
+((let a 1)(add a 3))
+
+lex: LPAREN
+ERROR: syntax error
+lex: LPAREN
+
+yacc: s_expr ::= error
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: SYMBOL sval = a
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: NUMBER dval = 1.000000
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: RPAREN
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+lex: LPAREN
+ERROR: unexpected token
+
+yacc: s_expr ::= error
+ERROR: unexpected token
+lex: FUNC sval = add
+
+yacc: s_expr ::= error
+ERROR: unexpected token
+lex: SYMBOL sval = a
+
+yacc: s_expr ::= error
+ERROR: unexpected token
+lex: NUMBER dval = 3.000000
+
+yacc: s_expr ::= error
+ERROR: unexpected token
+lex: RPAREN
+
+yacc: s_expr ::= error
+ERROR: unexpected token
+lex: RPAREN
+
+yacc: s_expr ::= error
+ERROR: unexpected token
+lex: EOL
+
+yacc: program ::= s_expr EOL
+> quit
+yacc: s_expr ::= QUIT
+
+Process finished with exit code 0
