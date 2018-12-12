@@ -137,8 +137,17 @@ double eval(AST_NODE *p) {
         return p->data.number.value;
     }
     if (p->type == SYMBOL_TYPE) {
+        currentNode = symbolTable->head;
         printf("eval symbol\n");
-        symbol(p->data.symbol.name, p->data.number.value);
+        while((strcmp(p->data.symbol.name,currentNode->ident) !=0)&& (currentNode->next!=NULL)){
+            currentNode=currentNode->next;
+        }
+        if(strcmp(p->data.symbol.name,currentNode->ident) == 1){
+            yyerror("Only one definition, please!\n");
+        }
+        else{
+            return eval(p->data.theScope.sExpr);
+        }
     }
     if (p->type == LET_LIST_TYPE) {
         printf("eval let list\n");
@@ -147,7 +156,11 @@ double eval(AST_NODE *p) {
     if (p->type == LET_ELEM_TYPE) {
         printf("eval let element\n");
         let_element(&p->data.symbol, p->data.element.sExpr);
-    } else {
+    }
+    else if(p->type == SCOPE_TYPE){
+        return (eval(p->data.theScope.sExpr));
+    }
+    else {
         if (p->data.function.op2 != NULL) {
             return calc(p->data.function.name, eval(p->data.function.op1), eval(p->data.function.op2));
         } else {
