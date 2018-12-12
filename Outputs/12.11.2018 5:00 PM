@@ -1,0 +1,122 @@
+
+> (let (a 1))
+lex: LPAREN
+yacc: s_expr ::= error
+yacc: s_expr ::= error
+lex: LPAREN
+yacc: s_expr ::= error
+lex: SYMBOL sval = a
+yacc: s_expr ::= error
+
+ERROR: syntax error
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+lex: NUMBER dval = 1.000000
+yacc: s_expr ::= error
+lex: RPAREN
+lex: RPAREN
+yacc: s_expr ::= error
+yacc: s_expr ::= error
+lex: EOL
+yacc: program ::= s_expr EOL
+
+ERROR: unexpected token
+ran scope
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+> (add 1 2)
+ran number function
+lex: LPAREN
+ran number function
+3.000000
+lex: FUNC sval = add
+> lex: NUMBER dval = 1.000000
+yacc: s_expr ::= NUMBER
+lex: NUMBER dval = 2.000000
+yacc: s_expr ::= NUMBER
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr expr RPAREN
+lex: EOL
+yacc: program ::= s_expr EOL
+(add ((let (abc 1)) (sub 3 abc)) 4)
+lex: LPAREN
+lex: FUNC sval = add
+lex: LPAREN
+lex: LPAREN
+yacc: s_expr ::= error
+yacc: s_expr ::= error
+lex: LPAREN
+yacc: s_expr ::= error
+lex: SYMBOL sval = abc
+yacc: s_expr ::= error
+lex: NUMBER dval = 1.000000
+yacc: s_expr ::= error
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr expr RPAREN
+lex: RPAREN
+yacc: s_expr ::= error
+yacc: s_expr ::= error
+lex: LPAREN
+yacc: s_expr ::= error
+lex: FUNC sval = sub
+yacc: s_expr ::= error
+lex: NUMBER dval = 3.000000
+yacc: s_expr ::= error
+lex: SYMBOL sval = abc
+yacc: s_expr ::= error
+lex: RPAREN
+yacc: s_expr ::= error
+lex: RPAREN
+yacc: s_expr ::= error
+lex: NUMBER dval = 4.000000
+yacc: s_expr ::= error
+lex: RPAREN
+yacc: s_expr ::= error
+lex: EOL
+yacc: program ::= s_expr EOL
+
+ERROR: syntax error
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+> quit
+yacc: s_expr ::= QUIT
+
+Process finished with exit code 0
