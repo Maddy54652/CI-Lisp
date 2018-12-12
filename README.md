@@ -19,6 +19,9 @@ Task 2: updated symbol_node to allow doubles and altered symbol function to acco
 
 Still on task 2. Compiles once again after a long time of not compiling. Recognizes symbols, but still has its own errors. 
 
+12.12.18 Midnight:
+I may be done with this assignment for the semester, but I'm not finished with it in my heart!
+
 Progress:
 TASK 1-COMPLETE
 TASK 2-IN PROGRESS
