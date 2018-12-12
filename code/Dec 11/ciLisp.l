@@ -1,88 +1,85 @@
-%option noyywrap
-%option nounput
-%option noinput
-
 %{
     #include "ciLisp.h"
 %}
 
-digit [0-9]
-number {digit}+(\.{digit}+)?
-func "neg"|"abs"|"exp"|"sqrt"|"add"|"sub"|"mult"|"div"|"remainder"|"log"|"pow"|"max"|"min"
-letter  [a-zA-Z]
-symbol  {letter}+
+%union {
+    double dval;
+    char *sval;
+    struct ast_node *astNode;
+    struct symbol_table_node *symbolTableNode;
+};
 
+%token <sval> FUNC
+%token <dval> NUMBER
+%token <sval> SYMBOL
+%token LPAREN RPAREN EOL QUIT LET
+
+%type <astNode> f_expr s_expr let_list let_elem scope
 %%
 
-{number} {
-    yylval.dval = strtod(yytext, NULL);
-    fprintf(stderr, "lex: NUMBER dval = %lf\n", yylval.dval);
-    return NUMBER;
+program:
+    s_expr EOL {
+        fprintf(stderr, "yacc: program ::= s_expr EOL\n");
+        if ($1) {
+            printf("%lf", eval($1));
+            freeNode($1);
+        }
+    };
+
+s_expr:
+    NUMBER {
+        fprintf(stderr, "yacc: s_expr ::= NUMBER\n");
+        $$ = number($1);
     }
-
-"quit" {
-    return QUIT;
+    | f_expr {
+        $$ = $1;
     }
-
-{func} {
-    yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
-    strcpy(yylval.sval, yytext);
-    fprintf(stderr, "lex: FUNC sval = %s\n", yylval.sval);
-    return FUNC;
+    | QUIT {
+        fprintf(stderr, "yacc: s_expr ::= QUIT\n");
+        exit(EXIT_SUCCESS);
     }
-
-"(" {
-    fprintf(stderr, "lex: LPAREN\n");
-    return LPAREN;
+    | error {
+        fprintf(stderr, "yacc: s_expr ::= error\n");
+        yyerror("unexpected token");
+        $$ = NULL;
     }
-
-")" {
-    fprintf(stderr, "lex: RPAREN\n");
-    return RPAREN;
+    | SYMBOL{
+        fprintf(stderr, "yacc: s_expr ::= SYMBOL\n");
+        $$ = symbol($1,NUMBER);
     }
+    | LPAREN scope s_expr RPAREN{
+        $$ =  scope($2,$3);
+    };
 
-[\n] {
-    fprintf(stderr, "lex: EOL\n");
-    YY_FLUSH_BUFFER;
-    return EOL;
+f_expr:
+    LPAREN FUNC s_expr RPAREN {
+        fprintf(stderr, "yacc: s_expr ::= LPAREN FUNC expr RPAREN\n");
+        $$ = function($2, $3, 0);
     }
+    | LPAREN FUNC s_expr s_expr RPAREN {
+        fprintf(stderr, "yacc: s_expr ::= LPAREN FUNC expr expr RPAREN\n");
+        $$ = function($2, $3, $4);
+    };
 
-[ |\t] ; /* skip whitespace */
-
-"let"  {
-    return LET;
+scope:
+    /* empty */ {
+        $$ = NULL;
     }
+    |LPAREN let_list RPAREN{
+        $$ = $2;
+    };
 
-{symbol}  {
-    yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
-    strcpy(yylval.sval, yytext);
-    fprintf(stderr, "lex: SYMBOL sval = %s\n", yylval.sval);
-    return SYMBOL;
-}
-
-. { // anything else
-    printf("ERROR: invalid character: >>%s<<\n", yytext);
+let_list:
+    let_elem{
+        $$=$1;
     }
+    | let_list let_elem{
+        $$ = let_list($2,$1);
+    };
 
+let_elem:
+    LPAREN LET SYMBOL s_expr RPAREN{
+        $$ = let_element($3,$4);
+    };
 %%
 
-/*
- * DO NOT CHANGE THE FOLLOWING CODE CRITICAL FOR REPL!
- */
-int main(void) {
-
-    //   freopen("/dev/null", "w", stderr); // except for this line that can be uncommented to throw away debug printouts
-
-    char *s_expr_str = NULL;
-    size_t s_expr_str_len = 0;
-    YY_BUFFER_STATE buffer;
-    while (true) {
-        printf("\n> ");
-        getline(&s_expr_str, &s_expr_str_len, stdin);
-        s_expr_str[s_expr_str_len++] = '\0';
-        s_expr_str[s_expr_str_len++] = '\0';
-        buffer = yy_scan_buffer(s_expr_str, s_expr_str_len);
-        yyparse();
-        yy_delete_buffer(buffer);
-    }
-}
