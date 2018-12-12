@@ -1,0 +1,48 @@
+C:\Users\Madalyn\Desktop\ciLisp\ciLisp\cmake-build-debug\cilisp.exe
+
+> (add(let (a 1))3)
+
+ERROR: syntax error
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+ran scope
+
+ERROR: unexpected token
+
+ERROR: unexpected token
+
+lex: LPAREN
+ERROR: unexpected token
+
+lex: FUNC sval = add
+> lex: LPAREN
+yacc: s_expr ::= error
+yacc: s_expr ::= error
+lex: LPAREN
+yacc: s_expr ::= error
+lex: SYMBOL sval = a
+yacc: s_expr ::= error
+lex: NUMBER dval = 1.000000
+yacc: s_expr ::= error
+lex: RPAREN
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr RPAREN
+lex: NUMBER dval = 3.000000
+yacc: s_expr ::= error
+yacc: s_expr ::= error
+lex: RPAREN
+yacc: s_expr ::= error
+lex: EOL
+yacc: program ::= s_expr EOL
+quit
+yacc: s_expr ::= QUIT
+
+Process finished with exit code 0
