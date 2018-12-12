@@ -15,6 +15,10 @@ No, not really.
 
 Task 2: updated symbol_node to allow doubles and altered symbol function to accompany this change.
 
+12.11.18
+
+Still on task 2. Compiles once again after a long time of not compiling. Recognizes symbols, but still has its own errors. 
+
 Progress:
 TASK 1-COMPLETE
 TASK 2-IN PROGRESS
