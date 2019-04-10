@@ -1,0 +1,45 @@
+> (add (let(a 1)) 4)
+lex: LPAREN
+lex: FUNC sval = add
+lex: LPAREN
+
+ERROR: syntax error
+yacc: s_expr ::= error
+
+
+> ERROR: unexpected token
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: LPAREN
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: SYMBOL sval = a
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: NUMBER dval = 1.000000
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: RPAREN
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr RPAREN
+lex: NUMBER dval = 4.000000
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: RPAREN
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: EOL
+yacc: program ::= s_expr EOL
+quit
+yacc: s_expr ::= QUIT
+
+Process finished with exit code 0
