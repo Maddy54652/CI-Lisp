@@ -8,7 +8,7 @@
 
 digit [0-9]
 number {digit}+(\.{digit}+)?
-func "neg"|"abs"|"exp"|"sqrt"|"add"|"sub"|"mult"|"div"|"remainder"|"log"|"pow"|"max"|"min"
+func "neg"|"abs"|"exp"|"sqrt"|"add"|"sub"|"mult"|"div"|"remainder"|"log"|"pow"|"max"|"min"|"exp2"|"cbrt"|"hypot"
 letter  [a-zA-Z]
 symbol  {letter}+
 
@@ -24,12 +24,21 @@ symbol  {letter}+
     return QUIT;
     }
 
+let    {
+    return LET;
+       }
 {func} {
     yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
     strcpy(yylval.sval, yytext);
     fprintf(stderr, "lex: FUNC sval = %s\n", yylval.sval);
     return FUNC;
     }
+{symbol} {
+                yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
+                strcpy(yylval.sval, yytext);
+                fprintf(stderr, "lex: SYMBOL sval = %s\n", yylval.sval);
+                return SYMBOL;
+       }
 
 "(" {
     fprintf(stderr, "lex: LPAREN\n");
@@ -47,18 +56,7 @@ symbol  {letter}+
     return EOL;
     }
 
-[ |\t] ; /* skip whitespace */
-
-"let"  {
-    return LET;
-    }
-
-{symbol}  {
-    yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
-    strcpy(yylval.sval, yytext);
-    fprintf(stderr, "lex: SYMBOL sval = %s\n", yylval.sval);
-    return SYMBOL;
-}
+[ \t] { } ; /* skip whitespace */
 
 . { // anything else
     printf("ERROR: invalid character: >>%s<<\n", yytext);
