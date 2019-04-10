@@ -22,6 +22,9 @@ Still on task 2. Compiles once again after a long time of not compiling. Recogni
 12.12.18 Midnight:
 I may have finished this assignment for the semester, but I haven't finished it in my heart!
 
+4.10.19
+I am working on this again!!
+
 Progress:
 TASK 1-COMPLETE
 TASK 2-IN PROGRESS
