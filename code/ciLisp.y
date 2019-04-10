@@ -6,15 +6,16 @@
     double dval;
     char *sval;
     struct ast_node *astNode;
-    struct symbol_table_node *symbolTableNode;
+    struct symbol_table_node *symbolNode;
 };
 
-%token <sval> FUNC
+%token <sval> FUNC SYMBOL
 %token <dval> NUMBER
-%token <sval> SYMBOL
-%token LPAREN RPAREN EOL QUIT LET
+%token LPAREN RPAREN LET EOL QUIT
 
-%type <astNode> f_expr s_expr let_list scope let_elem
+%type <astNode> s_expr f_expr
+%type <symbolNode> let_elem let_section let_list
+
 %%
 
 program:
@@ -34,6 +35,12 @@ s_expr:
     | f_expr {
         $$ = $1;
     }
+    | SYMBOL {
+        $$ = symbol($1);
+    }
+    | LPAREN let_section s_expr RPAREN {
+        $$ = setSymbolTable($2,$3);
+    }
     | QUIT {
         fprintf(stderr, "yacc: s_expr ::= QUIT\n");
         exit(EXIT_SUCCESS);
@@ -42,13 +49,6 @@ s_expr:
         fprintf(stderr, "yacc: s_expr ::= error\n");
         yyerror("unexpected token");
         $$ = NULL;
-    }
-    | SYMBOL{
-        fprintf(stderr, "yacc: s_expr ::= SYMBOL\n");
-        $$ = symbol($1,NUMBER);
-    }
-    | LPAREN scope s_expr RPAREN{
-        $$ =  scope($2,$3);
     };
 
 f_expr:
@@ -61,25 +61,26 @@ f_expr:
         $$ = function($2, $3, $4);
     };
 
-scope:
-    /* empty */ {
-        $$ = NULL;
-    }
-    |LPAREN let_list RPAREN{
+let_section:
+    LPAREN let_list RPAREN{
         $$ = $2;
+    }
+    | {
+        $$ = NULL;
     };
 
 let_list:
-    let_elem{
-        $$=$1;
+    let_list let_elem {
+        $$ = addSymbolToList($1,$2);
     }
-    | let_list let_elem{
-        $$ = let_list($2,$1);
+    | LET let_elem {
+        $$ = $2;
     };
 
 let_elem:
-    LPAREN LET SYMBOL s_expr RPAREN{
-        $$ = let_element($3,$4);
+    LPAREN SYMBOL s_expr RPAREN {
+        $$ = createSymbol($2,$3);
     };
+
 %%
 
