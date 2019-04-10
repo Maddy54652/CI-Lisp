@@ -1,0 +1,59 @@
+/Users/madalyn.henderson208/Desktop/ciLisp/cmake-build-debug/cilisp
+
+> (add ((let (abc 1)) (sub 3 abc)) 4) 
+lex: LPAREN
+lex: FUNC sval = add
+lex: LPAREN
+lex: LPAREN
+lex: LPAREN
+7.000000
+> lex: SYMBOL sval = abc
+lex: NUMBER dval = 1.000000
+yacc: s_expr ::= NUMBER
+lex: RPAREN
+lex: RPAREN
+lex: LPAREN
+lex: FUNC sval = sub
+lex: NUMBER dval = 3.000000
+yacc: s_expr ::= NUMBER
+lex: SYMBOL sval = abc
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr expr RPAREN
+lex: RPAREN
+lex: NUMBER dval = 4.000000
+yacc: s_expr ::= NUMBER
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr expr RPAREN
+lex: EOL
+yacc: program ::= s_expr EOL
+
+(mult ((let (a 1) (b 2)) (add a b)) (sqrt 2)) 
+lex: LPAREN
+lex: FUNC sval = mult
+lex: LPAREN
+lex: LPAREN
+lex: LPAREN
+lex: SYMBOL sval = a
+lex: NUMBER dval = 1.000000
+yacc: s_expr ::= NUMBER
+lex: RPAREN
+lex: LPAREN
+lex: SYMBOL sval = b
+lex: NUMBER dval = 2.000000
+yacc: s_expr ::= NUMBER
+lex: RPAREN
+lex: RPAREN
+lex: LPAREN
+lex: FUNC sval = add
+lex: SYMBOL sval = a
+lex: SYMBOL sval = b
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr expr RPAREN
+lex: RPAREN
+
+(add ((let (a ((let (b 2)) (mult b (sqrt 10))))) (div a 2)) ((let (c 5)) (sqrt c)))
+
+quit
+quit
+quit
+Process finished with exit code 15
