@@ -1,7 +1,7 @@
 #include "ciLisp.h"
 
 void yyerror(char *s) {
-    printf("\nERROR: %s\n", s);
+    fprintf(stderr, "\nERROR: %s\n", s);
     // note stderr that normally defaults to stdout, but can be redirected: ./src 2> src.log
     // CLion will display stderr in a different color from stdin and stdout
 }
@@ -9,28 +9,30 @@ void yyerror(char *s) {
 //
 // find out which function it is
 //
-int resolveFunc(char *func) {
-    char *funcs[] = {"neg", "abs", "exp", "sqrt", "add", "sub", "mult", "div", "remainder", "log", "pow", "max", "min",
-                     "exp2", "cbrt", "hypot"};
+
+char *func[] = {"neg", "abs", "exp", "sqrt", "add", "sub", "mult", "div", "remainder", "log", "pow", "max", "min",
+                "exp2", "cbrt", "hypot", "read", "rand", "print", "equal", "smaller", "larger", ""};
+
+OPER_TYPE resolveFunc(char *funcName)
+{
     int i = 0;
-    while (funcs[i][0] != '\0') {
-        if (strcmp(funcs[i], func) == 0)
+    while (func[i][0] != '\0')
+    {
+        if (strcmp(func[i], funcName) == 0)
             return i;
 
         i++;
     }
-    yyerror("invalid function");
-    return INVALID_OPER;
+    return CUSTOM_FUNC;
 }
 
 //
 // create a node for a number
 //
-AST_NODE *number(double value) {
+AST_NODE *number(double value)
+{
     AST_NODE *p;
     size_t nodeSize;
-
-    printf("ran number function\n");
 
     // allocate space for the fixed sie and the variable part (union)
     nodeSize = sizeof(AST_NODE) + sizeof(NUMBER_AST_NODE);
@@ -46,7 +48,8 @@ AST_NODE *number(double value) {
 //
 // create a node for a function
 //
-AST_NODE *function(char *funcName, AST_NODE *op1, AST_NODE *op2) {
+AST_NODE *function(char *funcName, AST_NODE *op1, AST_NODE *op2)
+{
     AST_NODE *p;
     size_t nodeSize;
 
@@ -66,11 +69,13 @@ AST_NODE *function(char *funcName, AST_NODE *op1, AST_NODE *op2) {
 //
 // free a node
 //
-void freeNode(AST_NODE *p) {
+void freeNode(AST_NODE *p)
+{
     if (!p)
         return;
 
-    if (p->type == FUNC_TYPE) {
+    if (p->type == FUNC_TYPE)
+    {
         free(p->data.function.name);
         freeNode(p->data.function.op1);
         freeNode(p->data.function.op2);
@@ -79,161 +84,204 @@ void freeNode(AST_NODE *p) {
     free(p);
 }
 
-double calc(char *func, double op1, double op2) {
-    switch (resolveFunc(func)) {
-        case (0):
-            return op1 * (-1);
-        case (1):
-            return fabs(op1);
-        case (2):
-            return exp(op1);
-        case (3):
-            return sqrt(op1);
-        case (4):
-            return op1 + op2;
-        case (5):
-            return op1 - op2;
-        case (6):
-            return op1 * op2;
-        case (7):
-            return op1 / op2;
-        case (8):
-            return (int) op1 % (int) op2;
-        case (9):
-            return log(op1);
-        case (10):
-            return pow(op1, op2);
-        case (11):
-            if (op1 > op2)
-                return op1;
-            else
-                return op2;
-        case (12):
-            if (op1 < op2)
-                return op1;
-            else
-                return op2;
-        case (13):
-            return exp2(op1);
-        case (14):
-            return cbrt(op1);
-        case (15):
-            return hypot(op1, op2);
-        default:
-            break;
-    }
-}
-
 //
 // evaluate an abstract syntax tree
 //
 // p points to the root
 //
-double eval(AST_NODE *p) {
+double eval(AST_NODE *p)
+{
     if (!p)
         return 0.0;
 
-    if (p->type == NUM_TYPE) {
-        return p->data.number.value;
+// TBD: implement
+
+    switch(p->type){
+        case NUM_TYPE:
+            return p->data.number.value;
+        case FUNC_TYPE:
+            switch (resolveFunc(p->data.function.name)){
+                case NEG_OPER:
+                    return ((-1)*eval(p->data.function.op1));
+                case ABS_OPER:
+                    return fabs(eval(p->data.function.op1));
+                case EXP_OPER:
+                    return exp(eval(p->data.function.op1));
+                case SQRT_OPER:
+                    return sqrt(eval(p->data.function.op1));
+                case ADD_OPER:
+                    return ((eval(p->data.function.op1))+(eval(p->data.function.op2)));
+                case SUB_OPER:
+                    return ((eval(p->data.function.op1))-(eval(p->data.function.op2)));
+                case MULT_OPER:
+                    return ((eval(p->data.function.op1))*(eval(p->data.function.op2)));
+                case DIV_OPER:
+                    return ((eval(p->data.function.op1))/(eval(p->data.function.op2)));
+                case REMAINDER_OPER:
+                    return remainder((eval(p->data.function.op1)),(eval(p->data.function.op2)));
+                case LOG_OPER:
+                    return(log(eval(p->data.function.op1)));
+                case POW_OPER:
+                    return (pow((eval(p->data.function.op1)),(eval(p->data.function.op2))));
+                case MAX_OPER:
+                    if((eval(p->data.function.op1))>(eval(p->data.function.op2))){
+                        return eval(p->data.function.op1);
+                    }
+                    else{
+                        return eval(p->data.function.op2);
+                    }
+                case MIN_OPER:
+                    if((eval(p->data.function.op1))<(eval(p->data.function.op2))){
+                        return eval(p->data.function.op1);
+                    }
+                    else{
+                        return eval(p->data.function.op2);
+                    }
+                case EXP2_OPER:
+                    return exp2((eval(p->data.function.op1)));
+                case CBRT_OPER:
+                    return (cbrt(eval(p->data.function.op1)));
+                case HYPOT_OPER:
+                    return(hypot((eval(p->data.function.op1)),(eval(p->data.function.op2))));
+            }
+                case SYMB_TYPE://resolve function
+                /*
+                 * call resolve symbol
+                 * */
+                resolveSymbol(p->data.symbol.name,p);
+                break;
+            ;
     }
-    if (p->type == SYMBOL_TYPE) {
-        currentNode = symbolTable->head;
-        printf("eval symbol\n");
-        while((strcmp(p->data.symbol.name,currentNode->ident) !=0)&& (currentNode->next!=NULL)){
-            currentNode=currentNode->next;
-        }
-        if(strcmp(p->data.symbol.name,currentNode->ident) == 1){
-            yyerror("Only one definition, please!\n");
-        }
-        else{
-            return eval(p->data.theScope.sExpr);
-        }
-    }
-    if (p->type == LET_LIST_TYPE) {
-        printf("eval let list\n");
-        let_list(&p->data.list, &p->data.element);
-    }
-    if (p->type == LET_ELEM_TYPE) {
-        printf("eval let element\n");
-        let_element(&p->data.symbol, p->data.element.sExpr);
-    }
-    else if(p->type == SCOPE_TYPE){
-        return (eval(p->data.theScope.sExpr));
-    }
-    else {
-        if (p->data.function.op2 != NULL) {
-            return calc(p->data.function.name, eval(p->data.function.op1), eval(p->data.function.op2));
-        } else {
-            return calc(p->data.function.name, eval(p->data.function.op1), 1.0);
-        }
-    }
+    return 0.0;
 }
 
+AST_NODE *setSymbolTable(SYMBOL_TABLE_NODE *symbolTable, AST_NODE *s_expr){
 
-LET_LIST_AST_NODE *let_list(LET_LIST_AST_NODE *theList, LET_ELEMENT_AST_NODE *theElement) {
-
-    AST_NODE *current;
-    size_t theSize;
-    theSize = sizeof(LET_LIST_AST_NODE) + sizeof(LET_LIST_AST_NODE);
-
-    current = malloc(theSize);
-    if (current == NULL) {
-        yyerror("an error has occured.\n");
+    if(s_expr == NULL){
+        return NULL;
     }
-    current->type = LET_LIST_TYPE;
-    current->data.list.let_elem = theElement;
-    current->data.list.let_list = theList;
+    s_expr->symbolTable = symbolTable;
+    SYMBOL_TABLE_NODE* temp;
+    temp = s_expr->symbolTable;
+    while(temp->next!= NULL){
+        temp->val->parent = s_expr;
+    }
+    return s_expr;
 
-    printf("run let_list\n");
-    return theList;
 }
 
-LET_ELEMENT_AST_NODE *let_element(SYMBOL_AST_NODE *input, AST_NODE *sExpr) {
-    AST_NODE *temp;
-    char *theName = input->name;
-    double value = input->value;
-    printf("ran let_element\n");
-    size_t spaceNeeded;
-    spaceNeeded = sizeof(AST_NODE) + sizeof(LET_ELEMENT_AST_NODE);
-    temp = malloc(spaceNeeded);
-    if (temp == NULL) {
-        yyerror("Unable to allocate space.\n");
+AST_NODE *symbol (char* name){
+
+    AST_NODE* temp;
+    temp = (AST_NODE*)malloc(sizeof(AST_NODE));
+
+    if(temp == NULL){
+        puts("Not enough space.");
+        exit(1);
     }
-    temp->type = LET_ELEM_TYPE;
-    temp->data.element.symbol = symbol(theName, value);
-    temp->data.element.sExpr = sExpr;
+    temp->symbolTable = (SYMBOL_TABLE_NODE*)malloc(sizeof(SYMBOL_TABLE_NODE));
+    if(temp->symbolTable == NULL){
+        puts("An error has occured");
+        exit(1);
+    }
+
+    temp->type = SYMB_TYPE;
+    temp->symbolTable = NULL;
+    temp->parent = NULL;
+
+    temp->data.symbol.name = (char*)malloc(sizeof(name));
+    if(temp->data.symbol.name == NULL){
+        puts("no space");
+        exit(1);
+    }
+
+    stpcpy(temp->data.symbol.name,name);
+
     return temp;
+
 }
 
-AST_NODE *scope(AST_NODE *letList, AST_NODE *sExpres) {
-    AST_NODE *temp;
-    size_t theSize;
-    theSize = sizeof(AST_NODE) + sizeof(SCOPE_NODE);
-    temp = malloc(theSize);
-    if (temp == NULL) {
-        yyerror("An error has occured\n");
-    }
-    printf("ran scope\n");
+SYMBOL_TABLE_NODE *createSymbol(char *name, AST_NODE *value){//defining a symbol
 
-    temp->type = SCOPE_TYPE;
-    temp->data.theScope.theList = letList;
-    temp->data.theScope.sExpr = sExpres;
+    if(value == NULL){
+        puts("you know, the value is NULL, and I'm pretty sure this isn't supposed to happen.");
+        return NULL;
+    }
+
+    SYMBOL_TABLE_NODE* temp;
+    temp = (SYMBOL_TABLE_NODE*)malloc(sizeof(SYMBOL_TABLE_NODE));
+
+    if(temp == NULL){
+        puts("Error: not enough space");
+        exit(1);
+    }
+    temp->ident = (char*)malloc(sizeof(name));
+    if(temp->ident == NULL){
+        puts("no space");
+        exit(1);
+    }
+
+    strcpy(temp->ident,name);
+    temp->val = value;
+    temp->next = NULL;
 
     return temp;
+
 }
 
-AST_NODE *symbol(char *theName, double theValue) {
-    AST_NODE *currentSymbol;
+SYMBOL_TABLE_NODE* findSymbol(SYMBOL_TABLE_NODE *symbolTable, SYMBOL_TABLE_NODE *symbol){
 
-    printf("ran symbol \n");
-
-    if ((currentSymbol = malloc(sizeof(AST_NODE) + sizeof(SYMBOL_AST_NODE))) == NULL) {
-        yyerror("An error has occured...:(\n");
+    if(symbol == NULL){
+        return NULL;
     }
 
-    currentSymbol->type = SYMBOL_TYPE;
-    currentSymbol->data.symbol.name = theName;
-    currentSymbol->data.symbol.value = theValue;
+    SYMBOL_TABLE_NODE* temp;
+    temp = symbolTable;
 
-    return currentSymbol;
+    while(temp->val->data.symbol.name != symbol->val->data.symbol.name && temp->next != NULL){
+        temp = temp->next;
+    }
+
+    if(temp->val->data.symbol.name == symbol->val->data.symbol.name){
+        return temp;
+    }
+
+    return NULL;
+}
+
+SYMBOL_TABLE_NODE *addSymbolToList(SYMBOL_TABLE_NODE *symbolTable, SYMBOL_TABLE_NODE *newSymbol){
+
+    if(newSymbol == NULL){
+        return symbolTable;
+    }
+    if(findSymbol(symbolTable,newSymbol)==NULL){
+        newSymbol->next = symbolTable;
+        return newSymbol;
+    }
+
+    SYMBOL_TABLE_NODE* temp = findSymbol(symbolTable,newSymbol);
+    temp->val = newSymbol->val;
+    temp->val->data = temp->val->data;
+    free(newSymbol);
+    return symbolTable;
+
+}
+
+
+SYMBOL_TABLE_NODE* resolveSymbol(char* name,AST_NODE* node){
+
+    AST_NODE* parent = node;
+    SYMBOL_TABLE_NODE* symbol;
+    while(parent != NULL){
+        symbol = parent->symbolTable;
+        while(symbol != NULL){
+            if(symbol->ident == name){
+                return symbol;
+            }
+        }
+        parent = parent->parent;
+    }
+    return NULL;
+
+
 }
