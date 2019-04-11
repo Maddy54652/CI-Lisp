@@ -25,10 +25,13 @@ I may have finished this assignment for the semester, but I haven't finished it 
 4.10.19
 I am working on this again!!
 
+4.11.19
+Task 2 has been completed!!!
+
 Progress:
 TASK 1-COMPLETE
-TASK 2-IN PROGRESS
-TASK 3-TBD
+TASK 2-COMPLETE
+TASK 3-IN PROGRESS
 TASK 4-TBD
 TASK 5-TBD
 TASK 6-TBD
