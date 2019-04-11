@@ -8,7 +8,7 @@
 
 digit [0-9]
 number {digit}+(\.{digit}+)?
-func "neg"|"abs"|"exp"|"sqrt"|"add"|"sub"|"mult"|"div"|"remainder"|"log"|"pow"|"max"|"min"|"exp2"|"cbrt"|"hypot"
+func "neg"|"abs"|"exp"|"sqrt"|"add"|"sub"|"mult"|"div"|"remainder"|"log"|"pow"|"max"|"min"|"exp2"|"cbrt"|"hypot"|"let"
 letter  [a-zA-Z]
 symbol  {letter}+
 
@@ -24,9 +24,9 @@ symbol  {letter}+
     return QUIT;
     }
 
-let    {
+"let" {
     return LET;
-       }
+      }
 {func} {
     yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
     strcpy(yylval.sval, yytext);
