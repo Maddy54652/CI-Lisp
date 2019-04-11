@@ -1,46 +1,15 @@
+[ 33%] [FLEX][ciLispScanner] Building scanner with flex 2.6.4
+[ 33%] [BISON][ciLispParser] Building parser with bison 3.0.4
+ciLispSrc/ciLisp.y: warning: 1 shift/reduce conflict [-Wconflicts-sr]
 Scanning dependencies of target cilisp
-[ 16%] Building C object CMakeFiles/cilisp.dir/ciLispSrc/ciLisp.c.o
-[ 33%] Building C object CMakeFiles/cilisp.dir/ciLispScanner.c.o
-/cygdrive/c/Users/Madalyn/Desktop/ciLisp/ciLisp/ciLispSrc/ciLisp.c: In function 'let_element':
-/cygdrive/c/Users/Madalyn/Desktop/ciLisp/ciLisp/ciLispSrc/ciLisp.c:184:11: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
-     if((J = malloc((sizeof(LET_ELEMENT_AST_NODE))+(2*(sizeof(AST_NODE))))== NULL)){
-           ^
-/cygdrive/c/Users/Madalyn/Desktop/ciLisp/ciLisp/ciLispSrc/ciLisp.c:187:15: warning: assignment from incompatible pointer type [-Wincompatible-pointer-types]
-     J->symbol = symbol;
-               ^
-/cygdrive/c/Users/Madalyn/Desktop/ciLisp/ciLisp/ciLispSrc/ciLisp.c: In function 'scope':
-/cygdrive/c/Users/Madalyn/Desktop/ciLisp/ciLisp/ciLispSrc/ciLisp.c:195:12: warning: return from incompatible pointer type [-Wincompatible-pointer-types]
-     return sExpres;
-            ^~~~~~~
-/cygdrive/c/Users/Madalyn/Desktop/ciLisp/ciLisp/ciLispSrc/ciLisp.c: In function 'calc':
-/cygdrive/c/Users/Madalyn/Desktop/ciLisp/ciLisp/ciLispSrc/ciLisp.c:130:1: warning: control reaches end of non-void function [-Wreturn-type]
- }
- ^
+[ 50%] Building C object CMakeFiles/cilisp.dir/ciLispSrc/ciLisp.c.o
+[ 66%] Building C object CMakeFiles/cilisp.dir/ciLispScanner.c.o
 /cygdrive/c/Users/Madalyn/Desktop/ciLisp/ciLisp/ciLispSrc/ciLisp.c: In function 'eval':
-/cygdrive/c/Users/Madalyn/Desktop/ciLisp/ciLisp/ciLispSrc/ciLisp.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
- }
- ^
-[ 50%] Building C object CMakeFiles/cilisp.dir/ciLispParser.c.o
-ciLispSrc/ciLisp.y: In function 'yyparse':
-ciLispSrc/ciLisp.y:52:25: warning: assignment from incompatible pointer type [-Wincompatible-pointer-types]
-ciLispSrc/ciLisp.y:78:44: warning: passing argument 1 of 'let_list' from incompatible pointer type [-Wincompatible-pointer-types]
-In file included from ciLispSrc/ciLisp.y:2:0:
-/cygdrive/c/Users/Madalyn/Desktop/ciLisp/ciLisp/ciLispSrc/ciLisp.h:104:20: note: expected 'LET_LIST_AST_NODE * {aka struct <anonymous> *}' but argument is of type 'struct symbol_table_node *'
- LET_LIST_AST_NODE* let_list(LET_LIST_AST_NODE* theList,LET_ELEMENT_AST_NODE* theElement);
-                    ^~~~~~~~
-ciLispSrc/ciLisp.y:78:71: warning: passing argument 2 of 'let_list' from incompatible pointer type [-Wincompatible-pointer-types]
-In file included from ciLispSrc/ciLisp.y:2:0:
-/cygdrive/c/Users/Madalyn/Desktop/ciLisp/ciLisp/ciLispSrc/ciLisp.h:104:20: note: expected 'LET_ELEMENT_AST_NODE * {aka struct <anonymous> *}' but argument is of type 'struct symbol_table_node *'
- LET_LIST_AST_NODE* let_list(LET_LIST_AST_NODE* theList,LET_ELEMENT_AST_NODE* theElement);
-                    ^~~~~~~~
-ciLispSrc/ciLisp.y:78:33: warning: assignment from incompatible pointer type [-Wincompatible-pointer-types]
-ciLispSrc/ciLisp.y:83:47: warning: passing argument 1 of 'let_element' from incompatible pointer type [-Wincompatible-pointer-types]
-In file included from ciLispSrc/ciLisp.y:2:0:
-/cygdrive/c/Users/Madalyn/Desktop/ciLisp/ciLisp/ciLispSrc/ciLisp.h:106:23: note: expected 'SYMBOL_AST_NODE * {aka struct <anonymous> *}' but argument is of type 'char *'
- LET_ELEMENT_AST_NODE* let_element(SYMBOL_AST_NODE* symbol,AST_NODE* s_expr);
-                       ^~~~~~~~~~~
-ciLispSrc/ciLisp.y:83:33: warning: assignment from incompatible pointer type [-Wincompatible-pointer-types]
-[ 66%] Linking C executable cilisp.exe
+/cygdrive/c/Users/Madalyn/Desktop/ciLisp/ciLisp/ciLispSrc/ciLisp.c:100:13: warning: enumeration value 'CUSTOM_FUNC' not handled in switch [-Wswitch]
+             switch (resolveFunc(p->data.function.name)) {
+             ^~~~~~
+[ 83%] Building C object CMakeFiles/cilisp.dir/ciLispParser.c.o
+[100%] Linking C executable cilisp.exe
 [100%] Built target cilisp
 
 Build finished
