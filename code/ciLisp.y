@@ -28,11 +28,7 @@ program:
     };
 
 s_expr:
-    NUMBER {
-        fprintf(stderr, "yacc: s_expr ::= NUMBER\n");
-        $$ = number($1);
-    }
-    | f_expr {
+      f_expr {
         $$ = $1;
     }
     | SYMBOL {
@@ -82,11 +78,13 @@ let_elem:
         $$ = createSymbol($2,$3);
     };
 type:
-    INTEGER {
-        $$ = number($1);
+    INTEGER_NUMBER {
+         fprintf(stderr, "yacc: s_expr ::= INTEGER_NUMBER\n");
+         $$ = number($1);
     };
-    | REAL{
-        $$ = number($1);
+    | REAL_NUMBER{
+         fprintf(stderr, "yacc: s_expr ::= REAL_NUMBER\n");
+         $$ = number($1);
     };
      |{
         $$ = NULL; 
