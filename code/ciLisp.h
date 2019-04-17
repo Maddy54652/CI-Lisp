@@ -42,6 +42,10 @@ typedef enum {
     NUM_TYPE, FUNC_TYPE,SYMB_TYPE
 } AST_NODE_TYPE;
 
+typedef enum{
+    NO_TYPE,INTEGER_TYPE,REAL_TYPE
+}DATA_TYPE;
+
 typedef struct {
     double value;
 } NUMBER_AST_NODE;
@@ -57,9 +61,11 @@ typedef struct symbol_ast_node{
 }SYMBOL_AST_NODE;
 
 typedef struct symbol_table_node{
+    DATA_TYPE val_type;
     char* ident;
     struct ast_node *val;
     struct symbol_table_node *next;
+    
 }SYMBOL_TABLE_NODE;
 
 typedef struct ast_node {
@@ -73,13 +79,18 @@ typedef struct ast_node {
     } data;
 } AST_NODE;
 
+typedef struct return_value{
+    DATA_TYPE type;
+    double value;
+}RETURN_VALUE;
+
 AST_NODE *number(double value);
 
 AST_NODE *function(char *funcName, AST_NODE *op1, AST_NODE *op2);
 
 void freeNode(AST_NODE *p);
 
-double eval(AST_NODE *ast);
+RETURN_VALUE eval(AST_NODE *ast);
 
 AST_NODE *setSymbolTable(SYMBOL_TABLE_NODE *symbolTable, AST_NODE *s_expr);
 
