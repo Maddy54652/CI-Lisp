@@ -78,9 +78,19 @@ let_list:
     };
 
 let_elem:
-    LPAREN SYMBOL s_expr RPAREN {
+    LPAREN TYPE SYMBOL s_expr RPAREN {
         $$ = createSymbol($2,$3);
     };
+type:
+    INTEGER {
+        $$ = number($1);
+    };
+    | REAL{
+        $$ = number($1);
+    };
+     |{
+        $$ = NULL; 
+      }
 
 %%
 
