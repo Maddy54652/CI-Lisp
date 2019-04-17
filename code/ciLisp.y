@@ -10,7 +10,7 @@
 };
 
 %token <sval> FUNC SYMBOL
-%token <dval> NUMBER
+%token <dval> REAL_NUMBER INTEGER_NUMBER NUMBER
 %token LPAREN RPAREN LET EOL QUIT
 
 %type <astNode> s_expr f_expr
