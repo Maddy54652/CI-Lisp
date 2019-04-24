@@ -29,11 +29,11 @@ I am working on this again!!
 Task 2 has been completed!!!
 
 4.24.19
-Wait, there is a problem... :/
+W̶a̶i̶t̶,̶ ̶t̶h̶e̶r̶e̶ ̶i̶s̶ ̶a̶ ̶p̶r̶o̶b̶l̶e̶m̶.̶.̶.̶ ̶:̶/̶ No there isn't. I'm just really good at confusing myself.
 
 Progress:
 TASK 1-COMPLETE
-TASK 2-Fixing
+TASK 2-COMPLETE
 TASK 3-Fixing
 TASK 4-TBD
 TASK 5-TBD
