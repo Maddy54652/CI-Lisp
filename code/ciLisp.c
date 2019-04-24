@@ -27,18 +27,29 @@ OPER_TYPE resolveFunc(char *funcName) {
 //
 // create a node for a number
 //
-AST_NODE *number(double value) {
+RETURN_VALUE *number(double value) {
     AST_NODE *p;
     size_t nodeSize;
+    int temp;
+    double remainder;
 
-    // allocate space for the fixed sie and the variable part (union)
-    nodeSize = sizeof(AST_NODE) + sizeof(NUMBER_AST_NODE);
+    // allocate space for the fixed size and the variable part (union)
+    nodeSize = sizeof(AST_NODE) + sizeof(RETURN_VALUE);
     if ((p = malloc(nodeSize)) == NULL)
         yyerror("out of memory");
 
     p->type = NUM_TYPE;
     p->data.number.value = value;
 
+    temp = (int)value;
+    remainder = value/(double)temp;
+    
+    if(remainder > 0){
+     p->data.number.type = REAL_TYPE;   
+    }else{
+     p->data.number.type = INTEGER_TYPE;
+    }
+    
     return p;
 }
 
@@ -49,7 +60,7 @@ AST_NODE *function(char *funcName, AST_NODE *op1, AST_NODE *op2) {
     AST_NODE *p;
     size_t nodeSize;
 
-    // allocate space for the fixed sie and the variable part (union)
+    // allocate space for the fixed size and the variable part (union)
     nodeSize = sizeof(AST_NODE);
     if ((p = malloc(nodeSize)) == NULL)
         yyerror("out of memory");
