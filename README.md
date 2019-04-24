@@ -28,10 +28,13 @@ I am working on this again!!
 4.11.19
 Task 2 has been completed!!!
 
+4.24.19
+Wait, there is a problem... :/
+
 Progress:
 TASK 1-COMPLETE
-TASK 2-COMPLETE
-TASK 3-IN PROGRESS
+TASK 2-Fixing
+TASK 3-Fixing
 TASK 4-TBD
 TASK 5-TBD
 TASK 6-TBD
