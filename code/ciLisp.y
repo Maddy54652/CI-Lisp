@@ -74,21 +74,20 @@ let_list:
     };
 
 let_elem:
-    LPAREN TYPE SYMBOL s_expr RPAREN {
+    LPAREN type SYMBOL s_expr RPAREN {
         $$ = createSymbol($2,$3);
     };
 type:
     INTEGER_NUMBER {
          fprintf(stderr, "yacc: s_expr ::= INTEGER_NUMBER\n");
-         $$ = number($1);
+         $$ = number($1,INTEGER_TYPE);
     };
     | REAL_NUMBER{
          fprintf(stderr, "yacc: s_expr ::= REAL_NUMBER\n");
-         $$ = number($1);
+         $$ = number($1,REAL_TYPE);
     };
      |{
-        $$ = NULL; 
+        $$ = NULL;
       };
 
 %%
-
