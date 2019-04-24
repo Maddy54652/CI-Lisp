@@ -84,7 +84,7 @@ typedef struct return_value{
     double value;
 }RETURN_VALUE;
 
-AST_NODE *number(double value);
+RETURN_VALUE *number(double value);
 
 AST_NODE *function(char *funcName, AST_NODE *op1, AST_NODE *op2);
 
