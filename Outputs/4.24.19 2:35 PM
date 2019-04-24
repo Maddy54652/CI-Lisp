@@ -1,0 +1,13 @@
+[ 33%] [BISON][ciLispParser] Building parser with bison 2.3
+[ 33%] [FLEX][ciLispScanner] Building scanner with flex 2.5.35
+ciLispSrc/ciLisp.y:78.27-28: $2 of `let_elem' has no declared type
+ciLispSrc/ciLisp.y:83.10-11: $$ of `type' has no declared type
+ciLispSrc/ciLisp.y:87.10-11: $$ of `type' has no declared type
+ciLispSrc/ciLisp.y:90.9-10: $$ of `type' has no declared type
+make[3]: *** [ciLispParser.c] Error 1
+make[3]: *** Waiting for unfinished jobs....
+ciLispSrc/ciLisp.l:22: warning, rule cannot be matched
+ciLispSrc/ciLisp.l:27: warning, rule cannot be matched
+make[2]: *** [CMakeFiles/cilisp.dir/all] Error 2
+make[1]: *** [CMakeFiles/cilisp.dir/rule] Error 2
+make: *** [cilisp] Error 2
