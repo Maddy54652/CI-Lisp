@@ -68,21 +68,21 @@ typedef struct symbol_table_node{
     
 }SYMBOL_TABLE_NODE;
 
+typedef struct return_value{
+    DATA_TYPE type;
+    double value;
+}RETURN_VALUE;
+
 typedef struct ast_node {
     AST_NODE_TYPE type;
     SYMBOL_TABLE_NODE *symbolTable;
     struct ast_node *parent;
     union {
-        NUMBER_AST_NODE number;
+        RETURN_VALUE number;
         FUNCTION_AST_NODE function;
         SYMBOL_AST_NODE symbol;
     } data;
 } AST_NODE;
-
-typedef struct return_value{
-    DATA_TYPE type;
-    double value;
-}RETURN_VALUE;
 
 RETURN_VALUE *number(double value);
 
