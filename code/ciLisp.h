@@ -65,7 +65,7 @@ typedef struct symbol_table_node{
     char* ident;
     struct ast_node *val;
     struct symbol_table_node *next;
-    
+
 }SYMBOL_TABLE_NODE;
 
 typedef struct return_value{
@@ -84,7 +84,7 @@ typedef struct ast_node {
     } data;
 } AST_NODE;
 
-RETURN_VALUE *number(double value);
+RETURN_VALUE *number(double value, DATA_TYPE theType));
 
 AST_NODE *function(char *funcName, AST_NODE *op1, AST_NODE *op2);
 
