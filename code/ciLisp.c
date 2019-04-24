@@ -27,7 +27,7 @@ OPER_TYPE resolveFunc(char *funcName) {
 //
 // create a node for a number
 //
-RETURN_VALUE *number(double value) {
+RETURN_VALUE *number(double value, DATA_TYPE theType) {
     AST_NODE *p;
     size_t nodeSize;
     int temp;
@@ -43,13 +43,15 @@ RETURN_VALUE *number(double value) {
 
     temp = (int)value;
     remainder = value/(double)temp;
-    
-    if(remainder > 0){
-     p->data.number.type = REAL_TYPE;   
+
+    if(theType == INTEGER_TYPE){
+        p->data.number.type = INTEGER_TYPE;
+    }else if(theType == REAL_TYPE){
+        p->data.number.type = REAL_TYPE;
     }else{
-     p->data.number.type = INTEGER_TYPE;
-    }
-    
+        p->data.number.type = NO_TYPE;
+    };
+
     return p;
 }
 
