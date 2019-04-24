@@ -12,6 +12,7 @@ integer_number [+|-]{digit}+
 func "neg"|"abs"|"exp"|"sqrt"|"add"|"sub"|"mult"|"div"|"remainder"|"log"|"pow"|"max"|"min"|"exp2"|"cbrt"|"hypot"|"let"
 letter  [a-zA-Z]
 symbol  {letter}+
+type {real_number}|{integer_number}
 
 %%
 
