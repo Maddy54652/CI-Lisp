@@ -12,20 +12,26 @@ integer_number [+|-]{digit}+
 func "neg"|"abs"|"exp"|"sqrt"|"add"|"sub"|"mult"|"div"|"remainder"|"log"|"pow"|"max"|"min"|"exp2"|"cbrt"|"hypot"|"let"
 letter  [a-zA-Z]
 symbol  {letter}+
-type {real_number}|{integer_number}
+type "real"|"integer"
 
 %%
-
+{type} {
+        yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
+        strcpy(yylval.sval, yytext);
+        fprintf(stderr, "lex: TYPE sval = %s\n", yylval.sval);
+        return TYPE;
+}
 {real_number} {
     yylval.dval = strtod(yytext, NULL);
-    fprintf(stderr, "lex: REAL_NUMBER dval = %lf\n", yylval.dval);
+    fprintf(stderr, "lex: REAL_NUMBER\n", yylval.dval);
     return REAL_NUMBER;
     }
 {integer_number} {
     yylval.dval = strtod(yytext, NULL);
-    fprintf(stderr, "lex: INTEGER_NUMBER dval = %d\n", yylval.dval);
+    fprintf(stderr, "lex: INTEGER_NUMBER\n", yylval.dval);
     return INTEGER_NUMBER;
     }
+
 "quit" {
     return QUIT;
     }
@@ -44,7 +50,7 @@ type {real_number}|{integer_number}
                 strcpy(yylval.sval, yytext);
                 fprintf(stderr, "lex: SYMBOL sval = %s\n", yylval.sval);
                 return SYMBOL;
-       }
+}
 
 "(" {
     fprintf(stderr, "lex: LPAREN\n");
