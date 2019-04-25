@@ -1,0 +1,91 @@
+> (let (integer a 1))
+ERROR: invalid character: >>1<<
+
+lex: LPAREN
+> 
+ERROR: syntax error
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: LPAREN
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: INTEGER_NUMBER
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: SYMBOL sval = a
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: RPAREN
+lex: RPAREN
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: EOL
+yacc: program ::= s_expr EOL
+((let (integer a 1.25))(add a 1))
+lex: LPAREN
+ERROR: invalid character: >>1<<
+lex: LPAREN
+ERROR: invalid character: >>.<<
+lex: LPAREN
+ERROR: invalid character: >>2<<
+lex: INTEGER_NUMBER
+
+ERROR: invalid character: >>5<<
+ERROR: invalid character: >>1<<
+
+> ERROR: syntax error
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: SYMBOL sval = a
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: RPAREN
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: RPAREN
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: LPAREN
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: FUNC sval = add
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: SYMBOL sval = a
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: RPAREN
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: RPAREN
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: EOL
+yacc: program ::= s_expr EOL
+quit
+yacc: s_expr ::= QUIT
+
+Process finished with exit code 0
