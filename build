@@ -1,37 +1,15 @@
 /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake --build /Users/madalyn.henderson208/Desktop/ciLisp/cmake-build-debug --target cilisp -- -j 2
-[ 16%] [BISON][ciLispParser] Building parser with bison 2.3
-ciLispSrc/ciLisp.y: warning: 1 useless nonterminal and 3 useless rules
-ciLispSrc/ciLisp.y:18.22-25: warning: useless nonterminal: type
-ciLispSrc/ciLisp.y:83.5-86.5: warning: useless rule: type: TYPE INTEGER_NUMBER
-ciLispSrc/ciLisp.y:87.7-90.5: warning: useless rule: type: TYPE REAL_NUMBER
-ciLispSrc/ciLisp.y:91.7-93.7: warning: useless rule: type: /* empty */
-ciLispSrc/ciLisp.y: conflicts: 1 shift/reduce
+[ 16%] [FLEX][ciLispScanner] Building scanner with flex 2.5.35
 Scanning dependencies of target cilisp
-[ 50%] Building C object CMakeFiles/cilisp.dir/ciLispScanner.c.o
-[ 50%] Building C object CMakeFiles/cilisp.dir/ciLispSrc/ciLisp.c.o
-/Users/madalyn.henderson208/Desktop/ciLisp/ciLispSrc/ciLisp.c:108:21: warning: enumeration value 'CUSTOM_FUNC' not handled in switch [-Wswitch]
-            switch (resolveFunc(p->data.function.name)) {
-                    ^
-/Users/madalyn.henderson208/Desktop/ciLisp/ciLispSrc/ciLisp.c:108:21: note: add missing switch cases
-            switch (resolveFunc(p->data.function.name)) {
-                    ^
-ciLispSrc/ciLisp.l:21:43: warning: data argument not used by format string [-Wformat-extra-args]
+[ 33%] Building C object CMakeFiles/cilisp.dir/ciLispScanner.c.o
+ciLispSrc/ciLisp.l:26:43: warning: data argument not used by format string [-Wformat-extra-args]
     fprintf(stderr, "lex: REAL_NUMBER\n", yylval.dval);
                     ~~~~~~~~~~~~~~~~~~~~  ^
-ciLispSrc/ciLisp.l:26:46: warning: data argument not used by format string [-Wformat-extra-args]
+ciLispSrc/ciLisp.l:31:46: warning: data argument not used by format string [-Wformat-extra-args]
     fprintf(stderr, "lex: INTEGER_NUMBER\n", yylval.dval);
                     ~~~~~~~~~~~~~~~~~~~~~~~  ^
-1 warning generated.
-[ 66%] Building C object CMakeFiles/cilisp.dir/ciLispParser.c.o
 2 warnings generated.
-ciLispSrc/ciLisp.y:79:43: warning: incompatible pointer to integer conversion passing 'char *' to parameter of type 'DATA_TYPE' [-Wint-conversion]
-        (yyval.symbolNode) = createSymbol((yyvsp[(2) - (5)].sval),(yyvsp[(3) - (5)].sval),(yyvsp[(4) - (5)].astNode));
-                                          ^~~~~~~~~~~~~~~~~~~~~~~
-/Users/madalyn.henderson208/Desktop/ciLisp/ciLispSrc/ciLisp.h:99:43: note: passing argument to parameter 'type' here
-SYMBOL_TABLE_NODE *createSymbol(DATA_TYPE type,char *name, AST_NODE *value);
-                                          ^
-1 warning generated.
-[ 83%] Linking C executable cilisp
+[ 50%] Linking C executable cilisp
 [100%] Built target cilisp
 
 Build finished
