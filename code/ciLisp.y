@@ -9,12 +9,13 @@
     struct symbol_table_node *symbolNode;
 };
 
-%token <sval> FUNC SYMBOL
+%token <sval> FUNC SYMBOL TYPE
 %token <dval> REAL_NUMBER INTEGER_NUMBER NUMBER
 %token LPAREN RPAREN LET EOL QUIT
 
 %type <astNode> s_expr f_expr
 %type <symbolNode> let_elem let_section let_list
+%type <dataType> type
 
 %%
 
@@ -74,17 +75,18 @@ let_list:
     };
 
 let_elem:
-    LPAREN type SYMBOL s_expr RPAREN {
-        $$ = createSymbol($2,$3);
+    LPAREN TYPE SYMBOL s_expr RPAREN {
+        $$ = createSymbol($2,$3,$4);
     };
+
 type:
-    INTEGER_NUMBER {
+    TYPE INTEGER_NUMBER {
          fprintf(stderr, "yacc: s_expr ::= INTEGER_NUMBER\n");
-         $$ = number($1,INTEGER_TYPE);
+         $$ = number($2,$1);
     };
-    | REAL_NUMBER{
+    | TYPE REAL_NUMBER{
          fprintf(stderr, "yacc: s_expr ::= REAL_NUMBER\n");
-         $$ = number($1,REAL_TYPE);
+         $$ = number($2,$1);
     };
      |{
         $$ = NULL;
