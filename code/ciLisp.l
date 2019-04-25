@@ -7,7 +7,7 @@
 %}
 
 digit [0-9]
-real_number [+|-]{digit}+(\.{digit}+)
+real_number [+|-]{digit}+(\.{digit}+)?
 integer_number [+|-]{digit}+
 func "neg"|"abs"|"exp"|"sqrt"|"add"|"sub"|"mult"|"div"|"remainder"|"log"|"pow"|"max"|"min"|"exp2"|"cbrt"|"hypot"|"let"
 letter  [a-zA-Z]
