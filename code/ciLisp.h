@@ -84,19 +84,19 @@ typedef struct ast_node {
     } data;
 } AST_NODE;
 
-RETURN_VALUE *number(double value, DATA_TYPE theType));
+AST_NODE *number(double value, DATA_TYPE theType);
 
 AST_NODE *function(char *funcName, AST_NODE *op1, AST_NODE *op2);
 
 void freeNode(AST_NODE *p);
 
-RETURN_VALUE eval(AST_NODE *p);
+double eval(AST_NODE *p);
 
 AST_NODE *setSymbolTable(SYMBOL_TABLE_NODE *symbolTable, AST_NODE *s_expr);
 
 AST_NODE *symbol (char* name);
 
-SYMBOL_TABLE_NODE *createSymbol(char *name, AST_NODE *value);
+SYMBOL_TABLE_NODE *createSymbol(DATA_TYPE type,char *name, AST_NODE *value);
 
 SYMBOL_TABLE_NODE* findSymbol(SYMBOL_TABLE_NODE *symbolTable, SYMBOL_TABLE_NODE *symbol);
 
