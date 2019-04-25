@@ -27,11 +27,9 @@ OPER_TYPE resolveFunc(char *funcName) {
 //
 // create a node for a number
 //
-RETURN_VALUE *number(double value, DATA_TYPE theType) {
+AST_NODE *number(double value, DATA_TYPE theType) {
     AST_NODE *p;
     size_t nodeSize;
-    int temp;
-    double remainder;
 
     // allocate space for the fixed size and the variable part (union)
     nodeSize = sizeof(AST_NODE) + sizeof(RETURN_VALUE);
@@ -40,9 +38,6 @@ RETURN_VALUE *number(double value, DATA_TYPE theType) {
 
     p->type = NUM_TYPE;
     p->data.number.value = value;
-
-    temp = (int)value;
-    remainder = value/(double)temp;
 
     if(theType == INTEGER_TYPE){
         p->data.number.type = INTEGER_TYPE;
@@ -100,7 +95,7 @@ void freeNode(AST_NODE *p) {
 //
 // p points to the root
 //
-RETURN_VALUE eval(AST_NODE *p) {
+double eval(AST_NODE *p) {
     if (!p)
         return 0.0;
     SYMBOL_TABLE_NODE *temp;
@@ -206,7 +201,7 @@ AST_NODE *symbol(char *name) {
 
 }
 
-SYMBOL_TABLE_NODE *createSymbol(char *name, AST_NODE *value) {//defining a symbol
+SYMBOL_TABLE_NODE *createSymbol(DATA_TYPE type,char *name, AST_NODE *value) {//defining a symbol
 
     if (value == NULL) {
         puts("you know, the value is NULL, and I'm pretty sure this isn't supposed to happen.");
@@ -229,6 +224,8 @@ SYMBOL_TABLE_NODE *createSymbol(char *name, AST_NODE *value) {//defining a symbo
     strcpy(temp->ident, name);
     temp->val = value;
     temp->next = NULL;
+    temp->val_type = type;
+
 
     return temp;
 
