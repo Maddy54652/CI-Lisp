@@ -1,0 +1,27 @@
+/Users/madalyn.henderson208/Desktop/ciLisp/cmake-build-debug/cilisp
+
+> ((let (integer a 2.5))(add a 1))
+ERROR: invalid character: >>2<<
+lex: LPAREN
+lex: LPAREN
+lex: LPAREN
+ERROR: invalid character: >>.<<
+lex: TYPE sval = integer
+ERROR: invalid character: >>5<<
+lex: SYMBOL sval = a
+you know, the value is NULL, and I'm pretty sure this isn't supposed to happen.
+lex: RPAREN
+ERROR: invalid character: >>1<<
+
+ERROR: syntax error
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+lex: RPAREN
+lex: LPAREN
+lex: FUNC sval = add
+lex: SYMBOL sval = a
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr RPAREN
+
+Process finished with exit code 11
