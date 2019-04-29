@@ -39,11 +39,11 @@ typedef enum oper { // must be in sync with funcs in resolveFunc()
 OPER_TYPE resolveFunc(char *);
 
 typedef enum {
-    NUM_TYPE, FUNC_TYPE,SYMB_TYPE
+    NUM_TYPE, FUNC_TYPE, SYMB_TYPE
 } AST_NODE_TYPE;
 
 typedef enum{
-    NO_TYPE,INTEGER_TYPE,REAL_TYPE
+    NO_TYPE, INTEGER_TYPE, REAL_TYPE
 }DATA_TYPE;
 
 typedef struct {
