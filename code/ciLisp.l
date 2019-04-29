@@ -7,28 +7,23 @@
 %}
 
 digit [0-9]
-real_number [+|-]{digit}+(\.{digit}+)?
-integer_number [+|-]{digit}+
-func "neg"|"abs"|"exp"|"sqrt"|"add"|"sub"|"mult"|"div"|"remainder"|"log"|"pow"|"max"|"min"|"exp2"|"cbrt"|"hypot"|"let"
+real_number [+|-]?{digit}+.({digit}+)?
+integer_number [+|-]?{digit}+
+func "neg"|"abs"|"exp"|"sqrt"|"add"|"sub"|"mult"|"div"|"remainder"|"log"|"pow"|"max"|"min"|"exp2"|"cbrt"|"hypot"
 letter  [a-zA-Z]
 symbol  {letter}+
-type "real"|"integer"
+
 
 %%
-{type} {
-        yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
-        strcpy(yylval.sval, yytext);
-        fprintf(stderr, "lex: TYPE sval = %s\n", yylval.sval);
-        return TYPE;
-}
+
 {real_number} {
     yylval.dval = strtod(yytext, NULL);
-    fprintf(stderr, "lex: REAL_NUMBER\n", yylval.dval);
+    fprintf(stderr, "lex: REAL_NUMBER %lf\n", yylval.dval);
     return REAL_NUMBER;
     }
 {integer_number} {
     yylval.dval = strtod(yytext, NULL);
-    fprintf(stderr, "lex: INTEGER_NUMBER\n", yylval.dval);
+    fprintf(stderr, "lex: INTEGER_NUMBER %.0lf\n", yylval.dval);
     return INTEGER_NUMBER;
     }
 
@@ -38,7 +33,15 @@ type "real"|"integer"
 
 "let" {
     return LET;
-      }
+    }
+
+"integer" {
+    return INTEGER;
+    }
+"real" {
+    return REAL;
+    }
+
 {func} {
     yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
     strcpy(yylval.sval, yytext);
