@@ -80,13 +80,13 @@ let_elem:
     };
 
 type:
-    TYPE INTEGER_NUMBER {
+    INTEGER_NUMBER {
          fprintf(stderr, "yacc: s_expr ::= INTEGER_NUMBER\n");
-         $$ = number($2,$1);
+         $$ = number($1,INTEGER_NUMBER);
     };
-    | TYPE REAL_NUMBER{
+    | REAL_NUMBER{
          fprintf(stderr, "yacc: s_expr ::= REAL_NUMBER\n");
-         $$ = number($2,$1);
+         $$ = number($1,REAL_NUMBER);
     };
      |{
         $$ = NULL;
