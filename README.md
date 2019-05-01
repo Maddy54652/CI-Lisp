@@ -34,7 +34,7 @@ Task 2 has been completed!!!
 Progress:
 TASK 1-COMPLETE
 TASK 2-COMPLETE
-TASK 3-Fixing
+TASK 3-in progress...
 TASK 4-TBD
 TASK 5-TBD
 TASK 6-TBD
