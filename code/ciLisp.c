@@ -95,7 +95,7 @@ void freeNode(AST_NODE *p) {
 //
 // p points to the root
 //
-double eval(AST_NODE *p) {
+RETURN_TYPE eval(AST_NODE *p) {
     if (!p)
         return 0.0;
     SYMBOL_TABLE_NODE *temp;
