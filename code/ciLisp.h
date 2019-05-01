@@ -90,7 +90,11 @@ AST_NODE *function(char *funcName, AST_NODE *op1, AST_NODE *op2);
 
 void freeNode(AST_NODE *p);
 
-double eval(AST_NODE *p);
+RETURN_TYPE eval(AST_NODE *p);
+
+AST_NODE evalFuncType();
+
+AST_NODE evalFuncValue();
 
 AST_NODE *setSymbolTable(SYMBOL_TABLE_NODE *symbolTable, AST_NODE *s_expr);
 
