@@ -122,6 +122,7 @@ RETURN_VALUE eval(AST_NODE *p) {
            
        case FUNCTION_TYPE:
            //evaluate function
+           evalFunction(temp);
            return temp;
            
        case SYMBOL_TYPE:
@@ -260,4 +261,47 @@ SYMBOL_TABLE_NODE *resolveSymbol(char *name, AST_NODE *node) {
 
 }
 
-
+AST_NODE evalFunction(AST_NODE *p){ //I need to change this around a bit...
+ switch (resolveFunc(p->data.function.name)) {
+                case NEG_OPER:
+                    return ((-1) * eval(p->data.function.op1));
+                case ABS_OPER:
+                    return fabs(eval(p->data.function.op1));
+                case EXP_OPER:
+                    return exp(eval(p->data.function.op1));
+                case SQRT_OPER:
+                    return sqrt(eval(p->data.function.op1));
+                case ADD_OPER:
+                    return ((eval(p->data.function.op1)) + (eval(p->data.function.op2)));
+                case SUB_OPER:
+                    return ((eval(p->data.function.op1)) - (eval(p->data.function.op2)));
+                case MULT_OPER:
+                    return ((eval(p->data.function.op1)) * (eval(p->data.function.op2)));
+                case DIV_OPER:
+                    return ((eval(p->data.function.op1)) / (eval(p->data.function.op2)));
+                case REMAINDER_OPER:
+                    return remainder((eval(p->data.function.op1)), (eval(p->data.function.op2)));
+                case LOG_OPER:
+                    return (log(eval(p->data.function.op1)));
+                case POW_OPER:
+                    return (pow((eval(p->data.function.op1)), (eval(p->data.function.op2))));
+                case MAX_OPER:
+                    if ((eval(p->data.function.op1)) > (eval(p->data.function.op2))) {
+                        return eval(p->data.function.op1);
+                    } else {
+                        return eval(p->data.function.op2);
+                    }
+                case MIN_OPER:
+                    if ((eval(p->data.function.op1)) < (eval(p->data.function.op2))) {
+                        return eval(p->data.function.op1);
+                    } else {
+                        return eval(p->data.function.op2);
+                    }
+                case EXP2_OPER:
+                    return exp2((eval(p->data.function.op1)));
+                case CBRT_OPER:
+                    return (cbrt(eval(p->data.function.op1)));
+                case HYPOT_OPER:
+                    return (hypot((eval(p->data.function.op1)), (eval(p->data.function.op2)))); 
+ }
+}
