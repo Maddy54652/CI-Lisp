@@ -127,8 +127,8 @@ RETURN_VALUE eval(AST_NODE *p) {
            temp = p->data;
            return temp;
            
-       case SYMBOL_TYPE:
-           //evaluate symbol
+       case SYMB_TYPE:
+           evalSymbol(p);
            return temp;
            
        default:
@@ -324,4 +324,12 @@ AST_NODE evalFunction(AST_NODE *p){
 }
 }
 
-
+AST_NODE evalSymbol(AST_NODE* p){
+    p = resolveSymbol(p->data.symbol.name, p);
+    if (p == NULL) {
+          puts("there is an error");
+          exit(1);
+       }
+    eval(temp->val);
+    return p;
+}
