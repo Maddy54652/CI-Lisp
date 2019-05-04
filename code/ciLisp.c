@@ -330,6 +330,6 @@ AST_NODE evalSymbol(AST_NODE* p){
           puts("there is an error");
           exit(1);
        }
-    eval(temp->val);
+    eval(p->data.symbol->val);
     return p;
 }
