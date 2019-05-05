@@ -31,6 +31,9 @@ Task 2 has been completed!!!
 4.24.19
 <strike>Wait, there's a problem :/</strike> No there isn't. I'm just really good at confusing myself.
 
+5.5.19
+There are some things wrong, but I will do my best to fix it. If anybody is curious, I have ran this on a few different computers.
+
 Progress:
 TASK 1-COMPLETE
 TASK 2-COMPLETE
