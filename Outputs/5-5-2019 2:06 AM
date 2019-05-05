@@ -1,0 +1,180 @@
+/home/maddy/Desktop/clion-2018.2.2/bin/cmake/linux/bin/cmake --build /home/maddy/Desktop/ciLisp/cmake-build-debug --target cilisp -- -j 2
+Scanning dependencies of target cilisp
+[ 33%] Building C object CMakeFiles/cilisp.dir/ciLispSrc/ciLisp.c.o
+[ 33%] Building C object CMakeFiles/cilisp.dir/ciLispScanner.c.o
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c: In function ‘eval’:
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:117:43: error: invalid type argument of ‘->’ (have ‘RETURN_VALUE {aka struct return_value}’)
+            gioerhgv= number(p->data.number->value,REAL_TYPE);
+                                           ^~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:118:16: error: invalid type argument of ‘->’ (have ‘RETURN_VALUE {aka struct return_value}’)
+            temp->value = gioerhgv->data.number->value;
+                ^~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:118:34: error: invalid type argument of ‘->’ (have ‘AST_NODE {aka struct ast_node}’)
+            temp->value = gioerhgv->data.number->value;
+                                  ^~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:119:16: error: invalid type argument of ‘->’ (have ‘RETURN_VALUE {aka struct return_value}’)
+            temp->type = REAL_TYPE;
+                ^~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:122:8: error: duplicate case value
+        case FUNC_TYPE:
+        ^~~~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:108:8: note: previously used here
+        case INTEGER_TYPE:
+        ^~~~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:125:17: error: incompatible types when assigning to type ‘RETURN_VALUE {aka struct return_value}’ from type ‘union <anonymous>’
+            temp = p->data;
+                 ^
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:128:8: error: duplicate case value
+        case SYMB_TYPE:
+        ^~~~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:115:8: note: previously used here
+        case REAL_TYPE:
+        ^~~~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c: In function ‘evalFunction’:
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:271:35: warning: comparison between ‘AST_NODE_TYPE {aka enum <anonymous>}’ and ‘enum <anonymous>’ [-Wenum-compare]
+     if(p->data.function.op1->type == INTEGER_TYPE){
+                                   ^~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:272:39: warning: comparison between ‘AST_NODE_TYPE {aka enum <anonymous>}’ and ‘enum <anonymous>’ [-Wenum-compare]
+         if(p->data.function.op2->type == REAL_TYPE){
+                                       ^~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:273:20: warning: format ‘%s’ expects argument of type ‘char *’, but argument 2 has type ‘struct ast_node *’ [-Wformat=]
+             printf("WARNING: precision loss in the assignment for variable %s\n",p->data.function.op2);
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:278:43: warning: comparison between ‘AST_NODE_TYPE {aka enum <anonymous>}’ and ‘enum <anonymous>’ [-Wenum-compare]
+             if(p->data.function.op2->type == INTEGER_TYPE){
+                                           ^~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:279:24: warning: format ‘%s’ expects argument of type ‘char *’, but argument 2 has type ‘struct ast_node *’ [-Wformat=]
+                 printf("WARNING: precision loss in the assignment for variable %s\n",p->data.function.op1);
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:270:7: warning: suggest explicit braces to avoid ambiguous ‘else’ [-Wdangling-else]
+     if(p->data.function.name)
+       ^
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:336:33: error: incompatible type for argument 1 of ‘log’
+                     return (log(eval(p->data.function.op1)));
+                                 ^~~~
+In file included from /usr/include/features.h:424:0,
+                 from /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:33,
+                 from /usr/include/stdio.h:27,
+                 from /home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.h:4,
+                 from /home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:1:
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:104:1: note: expected ‘double’ but argument is of type ‘RETURN_VALUE {aka struct return_value}’
+ __MATHCALL_VEC (log,, (_Mdouble_ __x));
+ ^
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:338:33: error: incompatible type for argument 1 of ‘pow’
+                     return (pow((eval(p->data.function.op1)), (eval(p->data.function.op2))));
+                                 ^
+In file included from /usr/include/features.h:424:0,
+                 from /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:33,
+                 from /usr/include/stdio.h:27,
+                 from /home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.h:4,
+                 from /home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:1:
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:140:1: note: expected ‘double’ but argument is of type ‘RETURN_VALUE {aka struct return_value}’
+ __MATHCALL_VEC (pow,, (_Mdouble_ __x, _Mdouble_ __y));
+ ^
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:338:63: error: incompatible type for argument 2 of ‘pow’
+                     return (pow((eval(p->data.function.op1)), (eval(p->data.function.op2))));
+                                                               ^
+In file included from /usr/include/features.h:424:0,
+                 from /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:33,
+                 from /usr/include/stdio.h:27,
+                 from /home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.h:4,
+                 from /home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:1:
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:140:1: note: expected ‘double’ but argument is of type ‘RETURN_VALUE {aka struct return_value}’
+ __MATHCALL_VEC (pow,, (_Mdouble_ __x, _Mdouble_ __y));
+ ^
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:340:54: error: invalid operands to binary > (have ‘RETURN_VALUE {aka struct return_value}’ and ‘RETURN_VALUE {aka struct return_value}’)
+                     if ((eval(p->data.function.op1)) > (eval(p->data.function.op2))) {
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:341:32: error: incompatible types when returning type ‘RETURN_VALUE {aka struct return_value}’ but ‘AST_NODE {aka struct ast_node}’ was expected
+                         return eval(p->data.function.op1);
+                                ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:343:32: error: incompatible types when returning type ‘RETURN_VALUE {aka struct return_value}’ but ‘AST_NODE {aka struct ast_node}’ was expected
+                         return eval(p->data.function.op2);
+                                ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:346:54: error: invalid operands to binary < (have ‘RETURN_VALUE {aka struct return_value}’ and ‘RETURN_VALUE {aka struct return_value}’)
+                     if ((eval(p->data.function.op1)) < (eval(p->data.function.op2))) {
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:347:32: error: incompatible types when returning type ‘RETURN_VALUE {aka struct return_value}’ but ‘AST_NODE {aka struct ast_node}’ was expected
+                         return eval(p->data.function.op1);
+                                ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:349:32: error: incompatible types when returning type ‘RETURN_VALUE {aka struct return_value}’ but ‘AST_NODE {aka struct ast_node}’ was expected
+                         return eval(p->data.function.op2);
+                                ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:352:33: error: incompatible type for argument 1 of ‘exp2’
+                     return exp2((eval(p->data.function.op1)));
+                                 ^
+In file included from /usr/include/features.h:424:0,
+                 from /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:33,
+                 from /usr/include/stdio.h:27,
+                 from /home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.h:4,
+                 from /home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:1:
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:130:1: note: expected ‘double’ but argument is of type ‘RETURN_VALUE {aka struct return_value}’
+ __MATHCALL (exp2,, (_Mdouble_ __x));
+ ^
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:354:34: error: incompatible type for argument 1 of ‘cbrt’
+                     return (cbrt(eval(p->data.function.op1)));
+                                  ^~~~
+In file included from /usr/include/features.h:424:0,
+                 from /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:33,
+                 from /usr/include/stdio.h:27,
+                 from /home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.h:4,
+                 from /home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:1:
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:152:1: note: expected ‘double’ but argument is of type ‘RETURN_VALUE {aka struct return_value}’
+ __MATHCALL (cbrt,, (_Mdouble_ __x));
+ ^
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:356:35: error: incompatible type for argument 1 of ‘hypot’
+                     return (hypot((eval(p->data.function.op1)), (eval(p->data.function.op2))));
+                                   ^
+In file included from /usr/include/features.h:424:0,
+                 from /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:33,
+                 from /usr/include/stdio.h:27,
+                 from /home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.h:4,
+                 from /home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:1:
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:147:1: note: expected ‘double’ but argument is of type ‘RETURN_VALUE {aka struct return_value}’
+ __MATHCALL (hypot,, (_Mdouble_ __x, _Mdouble_ __y));
+ ^
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:356:65: error: incompatible type for argument 2 of ‘hypot’
+                     return (hypot((eval(p->data.function.op1)), (eval(p->data.function.op2))));
+                                                                 ^
+In file included from /usr/include/features.h:424:0,
+                 from /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:33,
+                 from /usr/include/stdio.h:27,
+                 from /home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.h:4,
+                 from /home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:1:
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:147:1: note: expected ‘double’ but argument is of type ‘RETURN_VALUE {aka struct return_value}’
+ __MATHCALL (hypot,, (_Mdouble_ __x, _Mdouble_ __y));
+ ^
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:284:5: warning: enumeration value ‘CUSTOM_FUNC’ not handled in switch [-Wswitch]
+     switch (resolveFunc(p->data.function.name)) {
+     ^~~~~~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c: In function ‘evalSymbol’:
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:361:7: warning: assignment from incompatible pointer type [-Wincompatible-pointer-types]
+     p = resolveSymbol(p->data.symbol.name, p);
+       ^
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:366:24: error: invalid type argument of ‘->’ (have ‘SYMBOL_AST_NODE {aka struct symbol_ast_node}’)
+     eval(p->data.symbol->val);
+                        ^~
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:367:12: error: incompatible types when returning type ‘AST_NODE * {aka struct ast_node *}’ but ‘AST_NODE {aka struct ast_node}’ was expected
+     return p;
+            ^
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c: In function ‘eval’:
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:139:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c: In function ‘evalFunction’:
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:358:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c: In function ‘evalSymbol’:
+/home/maddy/Desktop/ciLisp/ciLispSrc/ciLisp.c:368:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+CMakeFiles/cilisp.dir/build.make:76: recipe for target 'CMakeFiles/cilisp.dir/ciLispSrc/ciLisp.c.o' failed
+make[3]: *** [CMakeFiles/cilisp.dir/ciLispSrc/ciLisp.c.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+CMakeFiles/Makefile2:72: recipe for target 'CMakeFiles/cilisp.dir/all' failed
+make[2]: *** [CMakeFiles/cilisp.dir/all] Error 2
+CMakeFiles/Makefile2:84: recipe for target 'CMakeFiles/cilisp.dir/rule' failed
+make[1]: *** [CMakeFiles/cilisp.dir/rule] Error 2
+Makefile:118: recipe for target 'cilisp' failed
+make: *** [cilisp] Error 2
