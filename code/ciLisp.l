@@ -7,8 +7,8 @@
 %}
 
 digit [0-9]
-real_number [+|-]?{digit}+.({digit}+)?
-integer_number [+|-]?{digit}+
+real_number [+-]?{digit}+\.({digit}+)?
+integer_number [+-]?{digit}+
 func "neg"|"abs"|"exp"|"sqrt"|"add"|"sub"|"mult"|"div"|"remainder"|"log"|"pow"|"max"|"min"|"exp2"|"cbrt"|"hypot"
 letter  [a-zA-Z]
 symbol  {letter}+
@@ -32,28 +32,31 @@ symbol  {letter}+
     }
 
 "let" {
+    fprintf(stderr, "lex: LET\n");
     return LET;
     }
 
 "integer" {
+    fprintf(stderr, "lex: INTEGER_NUMBER\n");
     return INTEGER;
     }
 "real" {
+    fprintf(stderr, "lex: REAL_NUMBER\n");
     return REAL;
     }
 
 {func} {
-    yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
+    yylval.sval = (char *) malloc(strlen(yytext) + 1);
     strcpy(yylval.sval, yytext);
     fprintf(stderr, "lex: FUNC sval = %s\n", yylval.sval);
     return FUNC;
     }
 {symbol} {
-                yylval.sval = (char *) malloc(strlen(yytext)*sizeof(char));
-                strcpy(yylval.sval, yytext);
-                fprintf(stderr, "lex: SYMBOL sval = %s\n", yylval.sval);
-                return SYMBOL;
-}
+    yylval.sval = (char *) malloc(strlen(yytext) + 1);
+    strcpy(yylval.sval, yytext);
+    fprintf(stderr, "lex: SYMBOL sval = %s\n", yylval.sval);
+    return SYMBOL;
+    }
 
 "(" {
     fprintf(stderr, "lex: LPAREN\n");
