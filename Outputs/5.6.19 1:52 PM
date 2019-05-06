@@ -1,0 +1,28 @@
+/Users/madalyn.henderson208/Desktop/ciLisp/cmake-build-debug/cilisp
+
+> ((let (integer a 1.25))(add a 1))
+lex: LPAREN
+lex: LPAREN
+lex: LET
+lex: LPAREN
+lex: INTEGER_NUMBER
+lex: SYMBOL sval = a
+lex: REAL_NUMBER 1.250000
+yacc: s_expr ::= REAL_NUMBER
+lex: RPAREN
+lex: RPAREN
+lex: LPAREN
+lex: FUNC sval = add
+lex: SYMBOL sval = a
+lex: INTEGER_NUMBER 1
+yacc: s_expr ::= INTEGER_NUMBER
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr expr RPAREN
+2.000000
+> lex: RPAREN
+lex: EOL
+yacc: program ::= s_expr EOL
+quit
+yacc: s_expr ::= QUIT
+
+Process finished with exit code 0
