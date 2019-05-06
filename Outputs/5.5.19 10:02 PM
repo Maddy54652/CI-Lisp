@@ -1,0 +1,32 @@
+/home/maddy/Desktop/ciLisp/cmake-build-debug/cilisp
+
+> ((let (integer a 1.25))(add a 1))
+lex: LPAREN
+lex: LPAREN
+lex: LPAREN
+lex: SYMBOL sval = a
+
+> lex: REAL_NUMBER 1.250000
+yacc: s_expr ::= REAL_NUMBER
+lex: RPAREN
+lex: RPAREN
+lex: LPAREN
+lex: FUNC sval = add
+lex: SYMBOL sval = a
+lex: REAL_NUMBER 1.000000
+yacc: s_expr ::= REAL_NUMBER
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr expr RPAREN
+lex: EOL
+
+ERROR: syntax error
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+quit
+yacc: s_expr ::= QUIT
+
+Process finished with exit code 0
