@@ -117,6 +117,11 @@ RETURN_VALUE eval(AST_NODE *p) {
                      temp.value = gioerhgv.data.number.value;
                      temp.type = REAL_TYPE;
                      break;
+                 case NO_TYPE:
+                     gioerhgv = *number(p->data.number.value,NO_TYPE);
+                     temp.value = gioerhgv.data.number.value;
+                     temp.type = NO_TYPE;
+                     break;
              }
              break;
        case FUNC_TYPE:
@@ -388,6 +393,6 @@ AST_NODE evalSymbol(AST_NODE* p){
           puts("there is an error");
           exit(1);
        }
-    eval(p); //what was I going for here??
+    //eval(p); //what was I going for here??
     return *p;
 }
