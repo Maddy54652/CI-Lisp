@@ -98,44 +98,45 @@ void freeNode(AST_NODE *p) {
 RETURN_VALUE eval(AST_NODE *p) { 
      RETURN_VALUE temp;
      AST_NODE gioerhgv;
-     if (!p){
+     /*if (!p){
          temp.type = NO_TYPE;
          temp.value = 0.0;
          return temp;
-     }
+     }*/
   
    switch(p->type){
-       case INTEGER_TYPE:
-           //evaluate number
-           gioerhgv = *number(p->data.number.value,INTEGER_TYPE);
-           temp.value = gioerhgv.data.number.value;
-           temp.type = INTEGER_TYPE;
-           return temp;
-           
-       case REAL_TYPE:
-           //evaluate number
-           gioerhgv= number(p->data.number->value,REAL_TYPE);
-           temp->value = gioerhgv->data.number->value;
-           temp->type = REAL_TYPE;
-           return temp;
-           
+       case NUM_TYPE:
+             switch (p->data.number.type){
+                 case INTEGER_TYPE:
+                     gioerhgv = *number(p->data.number.value,INTEGER_TYPE);
+                     temp.value = gioerhgv.data.number.value;
+                     temp.type = INTEGER_TYPE;
+                     break;
+                 case REAL_TYPE:
+                     gioerhgv = *number(p->data.number.value,REAL_TYPE);
+                     temp.value = gioerhgv.data.number.value;
+                     temp.type = REAL_TYPE;
+                     break;
+             }
+             break;
        case FUNC_TYPE:
            //I was too tired to come up with a decent name
            gioerhgv = evalFunction(p);
-           temp = p->data;
-           return temp;
+           temp = gioerhgv.data.number;
+           break;
            
        case SYMB_TYPE:
            gioerhgv = evalSymbol(p);
            temp.type = gioerhgv.data.number.type;
            temp.value = gioerhgv.data.number.value;
-           return temp;
+           break;
            
        default:
            temp.type = NO_TYPE;
            temp.value = 0.0;
            break;
    }
+    return temp;
 }
 
 AST_NODE *setSymbolTable(SYMBOL_TABLE_NODE *symbolTable, AST_NODE *s_expr) {
@@ -267,18 +268,18 @@ AST_NODE evalFunction(AST_NODE *p){
 
     RETURN_VALUE temp;
     RETURN_VALUE temp2;
-    if(p->data.function.name)
-    if(p->data.function.op1->type == INTEGER_TYPE){
-        if(p->data.function.op2->type == REAL_TYPE){
-            printf("WARNING: precision loss in the assignment for variable %s\n",p->data.function.op2);
+    /*if(p->data.function.name) I don't know what I planned to do with this*/
+    if(p->data.function.op1->data.number.type == INTEGER_TYPE){
+        if(p->data.function.op2->data.number.type == REAL_TYPE){
+            printf("WARNING: precision loss in the assignment for variable %s\n",p->data.function.op2->data.symbol.name);
             //round to closest
             p->data.function.op2->type = INTEGER_TYPE;
         }
     }else{
-            if(p->data.function.op2->type == INTEGER_TYPE){
-                printf("WARNING: precision loss in the assignment for variable %s\n",p->data.function.op1);
+            if(p->data.function.op2->data.number.type == INTEGER_TYPE){
+                printf("WARNING: precision loss in the assignment for variable %s\n",p->data.function.op1->data.symbol.name);
                 //round to closest
-                p->data.function.op1->type = INTEGER_TYPE;
+                p->data.function.op1->data.number.type = INTEGER_TYPE;
             }
     }
     switch (resolveFunc(p->data.function.name)) {
@@ -333,36 +334,60 @@ AST_NODE evalFunction(AST_NODE *p){
                     p->data.number.type = temp.type;
                     break;
                 case LOG_OPER:
-                    return (log(eval(p->data.function.op1)));
+                    temp = eval(p->data.function.op1);
+                    temp.value = log(temp.value);
+                    p->data.number = temp;
+                    break;
                 case POW_OPER:
-                    return (pow((eval(p->data.function.op1)), (eval(p->data.function.op2))));
+                    temp = eval(p->data.function.op1);
+                    temp2 = eval(p->data.function.op2);
+                    p->data.number.value = pow(temp.value,temp2.value);
+                    p->data.number.type = temp.type;
+                    break;
                 case MAX_OPER:
-                    if ((eval(p->data.function.op1)) > (eval(p->data.function.op2))) {
-                        return eval(p->data.function.op1);
+                        temp = eval(p->data.function.op1);
+                        temp2 = eval(p->data.function.op2);
+                    if (temp.value > temp2.value) {
+                        p->data.number = temp;
                     } else {
-                        return eval(p->data.function.op2);
+                        p->data.number = temp2;
                     }
+                    break;
                 case MIN_OPER:
-                    if ((eval(p->data.function.op1)) < (eval(p->data.function.op2))) {
-                        return eval(p->data.function.op1);
+                    temp = eval(p->data.function.op1);
+                    temp2 = eval(p->data.function.op2);
+                    if (temp.value < temp2.value) {
+                        p->data.number = temp;
                     } else {
-                        return eval(p->data.function.op2);
+                        p->data.number = temp2;
                     }
+                    break;
                 case EXP2_OPER:
-                    return exp2((eval(p->data.function.op1)));
+                    temp = eval(p->data.function.op1);
+                    temp.value = exp2(temp.value);
+                    p->data.number = temp;
+                    break;
                 case CBRT_OPER:
-                    return (cbrt(eval(p->data.function.op1)));
+                    temp = eval(p->data.function.op1);
+                    temp.value = cbrt(temp.value);
+                    p->data.number = temp;
+                    break;
                 case HYPOT_OPER:
-                    return (hypot((eval(p->data.function.op1)), (eval(p->data.function.op2))));
+                    temp = eval(p->data.function.op1);
+                    temp2 = eval(p->data.function.op2);
+                    p->data.number.value = hypot(temp.value,temp2.value);
+                    p->data.number.type = temp.type;
+                    break;
 }
+    return *p;
 }
 
 AST_NODE evalSymbol(AST_NODE* p){
-    p = resolveSymbol(p->data.symbol.name, p);
+    p->symbolTable = resolveSymbol(p->data.symbol.name, p);
     if (p == NULL) {
           puts("there is an error");
           exit(1);
        }
-    eval(p->data.symbol->val);
-    return p;
+    eval(p); //what was I going for here??
+    return *p;
 }
