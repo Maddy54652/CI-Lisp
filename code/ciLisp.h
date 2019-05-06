@@ -104,8 +104,8 @@ SYMBOL_TABLE_NODE *addSymbolToList(SYMBOL_TABLE_NODE *symbolTable, SYMBOL_TABLE_
 
 SYMBOL_TABLE_NODE* resolveSymbol(char* name,AST_NODE* node);
 
-AST_NODE evalSymbol(AST_NODE* p);
+//AST_NODE* evalSymbol(AST_NODE* p);
 
-AST_NODE evalFunction(AST_NODE *p);
+RETURN_VALUE evalFunction(AST_NODE *p);
 
 #endif
