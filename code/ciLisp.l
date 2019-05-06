@@ -9,7 +9,7 @@
 digit [0-9]
 real_number [+-]?{digit}+\.({digit}+)?
 integer_number [+-]?{digit}+
-func "neg"|"abs"|"exp"|"sqrt"|"add"|"sub"|"mult"|"div"|"remainder"|"log"|"pow"|"max"|"min"|"exp2"|"cbrt"|"hypot"
+func "neg"|"abs"|"exp"|"sqrt"|"add"|"sub"|"mult"|"div"|"remainder"|"log"|"pow"|"max"|"min"|"exp2"|"cbrt"|"hypot"|"print"
 letter  [a-zA-Z]
 symbol  {letter}+
 
@@ -35,7 +35,6 @@ symbol  {letter}+
     fprintf(stderr, "lex: LET\n");
     return LET;
     }
-
 "integer" {
     fprintf(stderr, "lex: INTEGER_NUMBER\n");
     return INTEGER;
