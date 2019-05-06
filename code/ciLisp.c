@@ -380,6 +380,15 @@ RETURN_VALUE evalFunction(AST_NODE *p){
             temp3.value = hypot(temp.value,temp2.value);
             temp3.type = temp.type;
             return temp3;
+        case PRINT_FUNC:
+            temp = eval(p->data.function.op1);
+            if(temp.type == INTEGER_TYPE){
+                printf("%d\n",(int)temp.value);
+            }
+            else{
+                printf("%.2f\n",temp.value);
+            }
+            return temp;
         default:
             temp.value = 0.0;
             temp.type = NO_TYPE;
