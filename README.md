@@ -36,10 +36,13 @@ There are some things wrong, but I will do my best to fix it. If anybody is curi
 
 There are still problems within part 3
 
+5.6.19
+All problems with part 3 have been solved!! :D
+
 Progress:
 TASK 1-COMPLETE
 TASK 2-COMPLETE
-TASK 3-in progress...
+TASK 3-COMPLETE
 TASK 4-TBD
 TASK 5-TBD
 TASK 6-TBD
