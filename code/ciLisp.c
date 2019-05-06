@@ -273,17 +273,18 @@ AST_NODE evalFunction(AST_NODE *p){
 
     RETURN_VALUE temp;
     RETURN_VALUE temp2;
-    /*if(p->data.function.name) I don't know what I planned to do with this*/
+
     if(p->data.function.op1->data.number.type == INTEGER_TYPE){
-        if(p->data.function.op2->data.number.type == REAL_TYPE){
+        if(p->data.function.op2->data.number.type != INTEGER_TYPE){
             printf("WARNING: precision loss in the assignment for variable %s\n",p->data.function.op2->data.symbol.name);
             //round to closest
-            p->data.function.op2->type = INTEGER_TYPE;
+            p->data.function.op2->data.number.value = round(p->data.function.op2->data.number.value);
+            p->data.function.op2->data.number.type = INTEGER_TYPE;
         }
     }else{
             if(p->data.function.op2->data.number.type == INTEGER_TYPE){
                 printf("WARNING: precision loss in the assignment for variable %s\n",p->data.function.op1->data.symbol.name);
-                //round to closest
+                p->data.function.op1->data.number.value = round(p->data.function.op1->data.number.value);
                 p->data.function.op1->data.number.type = INTEGER_TYPE;
             }
     }
