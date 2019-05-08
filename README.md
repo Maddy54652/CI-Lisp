@@ -39,12 +39,15 @@ There are still problems within part 3
 5.6.19
 All problems with part 3 have been solved!! :D
 
+5.8.19
+Part 4 has been solved! I'm halfway done with the project! You don't understand how happy I am about it! I will now start on part 5.
+
 Progress:
 TASK 1-COMPLETE
 TASK 2-COMPLETE
 TASK 3-COMPLETE
-TASK 4-IN PROGRESS
-TASK 5-TBD
+TASK 4-COMPLETE
+TASK 5-IN PROGRESS
 TASK 6-TBD
 TASK 7-TBD
 TASK 8-TBD
