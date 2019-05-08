@@ -11,7 +11,7 @@ void yyerror(char *s) {
 //
 
 char *func[] = {"neg", "abs", "exp", "sqrt", "add", "sub", "mult", "div", "remainder", "log", "pow", "max", "min",
-                "exp2", "cbrt", "hypot", "read", "rand", "print", "equal", "smaller", "larger", ""};
+                "exp2", "cbrt", "hypot", "print", "read", "rand", "equal", "smaller", "larger", ""};
 
 OPER_TYPE resolveFunc(char *funcName) {
     int i = 0;
@@ -66,11 +66,15 @@ AST_NODE *function(char *funcName, AST_NODE *op1, AST_NODE *op2) {
 //    strcpy(p->data.function.name,funcName);
 
     p->data.function.name = funcName;
-    p->data.function.op1 = op1;
-    p->data.function.op2 = op2;
 
-    p->data.function.op1->parent = p;
-    p->data.function.op2->parent = p;
+    if(op1 != NULL){
+        p->data.function.op1 = op1;
+        p->data.function.op1->parent = p;
+    }
+    if(op2 != NULL){
+        p->data.function.op2 = op2;
+        p->data.function.op2->parent = p;
+    }
 
     return p;
 }
@@ -84,8 +88,12 @@ void freeNode(AST_NODE *p) {
 
     if (p->type == FUNC_TYPE) {
         free(p->data.function.name);
-        freeNode(p->data.function.op1);
-        freeNode(p->data.function.op2);
+        if(p->data.function.op1 != NULL){
+            freeNode(p->data.function.op1);
+        }
+        if(p->data.function.op2 != NULL){
+            freeNode(p->data.function.op2);
+        }
     }
 
     free(p);
@@ -380,15 +388,13 @@ RETURN_VALUE evalFunction(AST_NODE *p){
             temp3.value = hypot(temp.value,temp2.value);
             temp3.type = temp.type;
             return temp3;
-        case PRINT_FUNC:
+        case PRINT:
             temp = eval(p->data.function.op1);
-            /*if(temp.type == INTEGER_TYPE){
-                printf("%d\n",(int)temp.value);
-            }
-            else{
-                printf("%.2f\n",temp.value);
-            }*/
-            
+             if(temp.type == INTEGER_TYPE){
+                    printf("%d\n",(int)temp.value);
+                } else{
+                    printf("%.2lf\n",temp.value);
+                }
             return temp;
         default:
             temp.value = 0.0;
