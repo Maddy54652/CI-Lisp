@@ -1,0 +1,71 @@
+/Users/madalyn.henderson208/Desktop/ciLisp/cmake-build-debug/cilisp
+
+> (print 100)
+lex: LPAREN
+lex: FUNC sval = print
+lex: INTEGER_NUMBER 100
+yacc: s_expr ::= INTEGER_NUMBER
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr RPAREN
+lex: EOL
+yacc: program ::= s_expr EOL
+100
+100.000000
+>  (print 39)
+lex: LPAREN
+39
+lex: FUNC sval = print
+39.000000
+lex: INTEGER_NUMBER 39
+> yacc: s_expr ::= INTEGER_NUMBER
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr RPAREN
+lex: EOL
+yacc: program ::= s_expr EOL
+(print 15)
+lex: LPAREN
+lex: FUNC sval = print
+15
+15.000000
+> lex: INTEGER_NUMBER 15
+yacc: s_expr ::= INTEGER_NUMBER
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr RPAREN
+lex: EOL
+yacc: program ::= s_expr EOL
+(print 15)
+lex: LPAREN
+15
+lex: FUNC sval = print
+lex: INTEGER_NUMBER 15
+yacc: s_expr ::= INTEGER_NUMBER
+15.000000
+lex: RPAREN
+> yacc: s_expr ::= LPAREN FUNC expr RPAREN
+lex: EOL
+yacc: program ::= s_expr EOL
+((let (integer a 1))(print a))
+lex: LPAREN
+1
+lex: LPAREN
+1.000000
+lex: LET
+> lex: LPAREN
+lex: INTEGER_NUMBER
+lex: SYMBOL sval = a
+lex: INTEGER_NUMBER 1
+yacc: s_expr ::= INTEGER_NUMBER
+lex: RPAREN
+lex: RPAREN
+lex: LPAREN
+lex: FUNC sval = print
+lex: SYMBOL sval = a
+lex: RPAREN
+yacc: s_expr ::= LPAREN FUNC expr RPAREN
+lex: RPAREN
+lex: EOL
+yacc: program ::= s_expr EOL
+quit
+yacc: s_expr ::= QUIT
+
+Process finished with exit code 0
