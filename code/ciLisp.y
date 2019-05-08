@@ -54,7 +54,7 @@ s_expr:
 f_expr:
     LPAREN FUNC s_expr RPAREN {
         fprintf(stderr, "yacc: s_expr ::= LPAREN FUNC expr RPAREN\n");
-        $$ = function($2, $3, 0);
+        $$ = function($2, $3, NULL);
     }
     | LPAREN FUNC s_expr s_expr RPAREN {
         fprintf(stderr, "yacc: s_expr ::= LPAREN FUNC expr expr RPAREN\n");
