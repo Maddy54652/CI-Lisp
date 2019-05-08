@@ -1,0 +1,6 @@
+> ((let (integer a 1))(print a))
+=> 1
+> ((let (real b 10))(print b))
+=> 10.00
+> (print 100)
+=> 100.00
