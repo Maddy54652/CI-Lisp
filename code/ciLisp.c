@@ -53,7 +53,7 @@ AST_NODE *number(double value, DATA_TYPE theType) {
 //
 // create a node for a function
 //
-AST_NODE *function(char *funcName, AST_NODE *op1, AST_NODE *op2) {
+AST_NODE *function(char *funcName, AST_NODE *oplist) {
     AST_NODE *p;
     size_t nodeSize;
 
@@ -67,13 +67,11 @@ AST_NODE *function(char *funcName, AST_NODE *op1, AST_NODE *op2) {
 
     p->data.function.name = funcName;
 
-    if(op1 != NULL){
-        p->data.function.op1 = op1;
-        p->data.function.op1->parent = p;
-    }
-    if(op2 != NULL){
-        p->data.function.op2 = op2;
-        p->data.function.op2->parent = p;
+
+
+    if(oplist != NULL){
+        p->data.function.opList = oplist;
+        p->data.function.opList->parent = p;
     }
 
     return p;
@@ -88,11 +86,12 @@ void freeNode(AST_NODE *p) {
 
     if (p->type == FUNC_TYPE) {
         free(p->data.function.name);
-        if(p->data.function.op1 != NULL){
-            freeNode(p->data.function.op1);
-        }
-        if(p->data.function.op2 != NULL){
-            freeNode(p->data.function.op2);
+        if(p->data.function.opList != NULL){
+            AST_NODE* temp;
+            temp = p->data.function.opList;
+            if (temp->next != NULL){
+                freeNode(temp->next);
+            }
         }
     }
 
@@ -284,6 +283,8 @@ RETURN_VALUE evalFunction(AST_NODE *p){
     RETURN_VALUE temp;
     RETURN_VALUE temp2;
     RETURN_VALUE temp3;
+    struct ast_node* tracker;
+
 
 //    if(p->data.function.op1->data.number.type == INTEGER_TYPE){
 //        if(p->data.function.op2->data.number.type != INTEGER_TYPE){
@@ -301,101 +302,335 @@ RETURN_VALUE evalFunction(AST_NODE *p){
 //    }
     switch (resolveFunc(p->data.function.name)) {
         case NEG_OPER:
-            temp = eval(p->data.function.op1);
+            if(countOperators(p->data.function.opList)<1){
+                errorMessages(3,"NEG_OPER");
+
+                temp.value = 0.0;
+                temp.type = REAL_TYPE;
+
+                return temp;
+            }else if(countOperators(p->data.function.opList)>1){
+                errorMessages(2,"NEG_OPER");
+            }
+
+            temp = eval(p->data.function.opList);
             temp.value = (temp.value)*(-1);
+
             return temp;
+
         case ABS_OPER:
-            temp = eval(p->data.function.op2);
+            if(countOperators(p->data.function.opList)<1){
+                errorMessages(3,"ABS_OPER");
+
+                temp.value = 0.0;
+                temp.type = REAL_TYPE;
+
+                return temp;
+            }else if(countOperators(p->data.function.opList)>1){
+                errorMessages(2,"ABS_OPER");
+            }
+
+            temp = eval(p->data.function.opList);
             temp.value = fabs(temp.value);
+
             return temp;
         case EXP_OPER:
-            temp = eval(p->data.function.op1);
+            if(countOperators(p->data.function.opList)<1){
+                errorMessages(3,"EXPR_OPER");
+
+                temp.value = 0.0;
+                temp.type = REAL_TYPE;
+
+                return temp;
+            } else if(countOperators(p->data.function.opList)>1){
+                errorMessages(2,"EXPR_OPER");
+            }
+            temp = eval(p->data.function.opList);
             temp.value = exp(temp.value);
             return temp;
         case SQRT_OPER:
-            temp = eval(p->data.function.op1);
+            if(countOperators(p->data.function.opList)>1){
+                errorMessages(2,"SQRT_OPER");
+            }else if(countOperators(p->data.function.opList)<1){
+                errorMessages(3,"SQRT_OPER");
+
+                temp.value = 0.0;
+                temp.type = REAL_TYPE;
+
+                return temp;
+            }
+            temp = eval(p->data.function.opList);
             temp.value = sqrt(temp.value);
+
             return temp;
         case ADD_OPER:
-            temp = eval(p->data.function.op1);
-            temp2 = eval(p->data.function.op2);
-            temp3.value = temp.value +temp2.value;
-            temp3.type = temp.type;
-            return temp3;
+
+            if(countOperators(p->data.function.opList)<0) {
+                errorMessages(3, "ADD_OPER");
+
+                temp.value = 0.0;
+                temp.type = REAL_TYPE;
+
+                return temp;
+            }
+
+            temp = eval(p->data.function.opList);
+            tracker = p->data.function.opList->next;
+
+            while(tracker!=NULL){
+                temp2.value = eval(tracker->data.function.opList).value;
+                temp.value += temp2.value;
+                tracker = tracker->next;
+            }
+
+            return temp;
+
         case SUB_OPER:
-            temp = eval(p->data.function.op1);
-            temp2 = eval(p->data.function.op2);
-            temp3.value = temp.value -temp2.value;
+            if(countOperators(p->data.function.opList)<2){
+                errorMessages(3,"SUB_OPER");
+
+                temp.value = 0.0;
+                temp.type = REAL_TYPE;
+
+                return temp;
+
+            }else if(countOperators(p->data.function.opList)>2){
+                errorMessages(2,"SUB_OPER");
+            }
+
+            temp = eval(p->data.function.opList);
+            temp2 = eval(p->data.function.opList->next);
+
+            temp3.value = temp.value-temp2.value;
             temp3.type = temp.type;
+
             return temp3;
+
         case MULT_OPER:
-            temp = eval(p->data.function.op1);
-            temp2 = eval(p->data.function.op2);
-            temp3.value = temp.value *temp2.value;
-            temp3.type = temp.type;
-            return temp3;
+            if(countOperators(p->data.function.opList)<2){
+                errorMessages(3,"MULT_OPER");
+
+                temp.value = 0.0;
+                temp.type = REAL_TYPE;
+                return temp;
+            }
+
+            temp = eval(p->data.function.opList);
+            tracker = p->data.function.opList->next;
+
+            while(tracker!=NULL){
+                temp2.value = eval(tracker->data.function.opList).value;
+                temp.value = temp2.value*temp.value;
+                tracker = tracker->next;
+            }
+
+            return temp;
+
         case DIV_OPER:
-            temp = eval(p->data.function.op1);
-            temp2 = eval(p->data.function.op2);
+            if(countOperators(p->data.function.opList)<2){
+                errorMessages(3,"DIV_OPER");
+
+                temp.value = 0.0;
+                temp.type = REAL_TYPE;
+                return temp;
+
+            }else if(countOperators(p->data.function.opList)>2){
+                errorMessages(2,"DIV_OPER");
+            }
+
+            temp = eval(p->data.function.opList);
+            temp2 = eval(p->data.function.opList->next);
+
             temp3.value = temp.value /temp2.value;
             temp3.type = temp.type;
+
             return temp3;
+
         case REMAINDER_OPER:
-            temp = eval(p->data.function.op1);
-            temp2 = eval(p->data.function.op2);
+            if(countOperators(p->data.function.opList)<2){
+                errorMessages(3,"REMAINDER_OPER");
+
+                temp.type = REAL_TYPE;
+                temp.value = 0.0;
+
+                return temp;
+            }else if(countOperators(p->data.function.opList)>2){
+                errorMessages(2,"REMAINDER_OPER");
+            }
+
+            temp = eval(p->data.function.opList);
+            temp2 = eval(p->data.function.opList->next);
+
             temp3.value = remainder(temp.value,temp2.value);
             temp3.type = temp.type;
+
             return temp3;
+
         case LOG_OPER:
-            temp = eval(p->data.function.op1);
+            if(countOperators(p->data.function.opList)<1){
+                errorMessages(3,"LOG_OPER");
+
+                temp.value = 0.0;
+                temp.type = REAL_TYPE;
+
+                return temp;
+
+            } else if(countOperators(p->data.function.opList)>1){
+                errorMessages(2,"LOG_OPER");
+            }
+
+            temp = eval(p->data.function.opList);
+
             temp.value = log(temp.value);
-            p->data.number = temp;
-            break;
+
+            return temp;
+
         case POW_OPER:
-            temp = eval(p->data.function.op1);
-            temp2 = eval(p->data.function.op2);
+            if(countOperators(p->data.function.opList)<2){
+                errorMessages(3,"POW_OPER");
+
+                temp.type = REAL_TYPE;
+                temp.value = 0.0;
+                return temp;
+
+            } else if(countOperators(p->data.function.opList)>2){
+                errorMessages(2,"POW_OPER");
+            }
+
+            temp = eval(p->data.function.opList);
+            temp2 = eval(p->data.function.opList->next);
+
             temp3.value = pow(temp.value,temp2.value);
             temp3.type = temp.type;
+
             return temp3;
+
         case MAX_OPER:
-            temp = eval(p->data.function.op1);
-            temp2 = eval(p->data.function.op2);
+
+            if(countOperators(p->data.function.opList)>2){
+                errorMessages(2,"MAX_OPER");
+            } else if(countOperators(p->data.function.opList)<2){
+                errorMessages(3,"MAX_OPER");
+
+                temp.value = 0.0;
+                temp.type = REAL_TYPE;
+                return temp;
+            }
+
+            temp = eval(p->data.function.opList);
+            temp2 = eval(p->data.function.opList->next);
+
             if (temp.value > temp2.value) {
                 return temp;
             } else {
                 return temp2;
             }
+
         case MIN_OPER:
-            temp = eval(p->data.function.op1);
-            temp2 = eval(p->data.function.op2);
+
+            if(countOperators(p->data.function.opList)<2){
+                errorMessages(3,"MIN_OPER");
+
+                temp.type = REAL_TYPE;
+                temp.value = 0.0;
+                return temp;
+
+            }else if(countOperators(p->data.function.opList)>2){
+
+                errorMessages(2,"MIN_OPER");
+
+            }
+
+            temp = eval(p->data.function.opList);
+            temp2 = eval(p->data.function.opList->next);
+
             if (temp.value < temp2.value) {
                 return temp;
             } else {
                 return temp2;
             }
+
         case EXP2_OPER:
-            temp = eval(p->data.function.op1);
+
+            if(countOperators(p->data.function.opList)<1){
+
+                errorMessages(3,"EXPR2_OPER");
+
+                temp.value = 0.0;
+                temp.type = REAL_TYPE;
+
+                return temp;
+
+            } else if(countOperators(p->data.function.opList)>1){
+
+                errorMessages(2,"EXPR2_OPER");
+            }
+
+            temp = eval(p->data.function.opList);
+
             temp.value = exp2(temp.value);
-            p->data.number = temp;
-            break;
-        case CBRT_OPER:
-            temp = eval(p->data.function.op1);
-            temp.value = cbrt(temp.value);
+
             return temp;
+
+        case CBRT_OPER:
+
+            if(countOperators(p->data.function.opList)>1){
+                errorMessages(2,"CBRT_OPER");
+            } else if(countOperators(p->data.function.opList)<1){
+                errorMessages(3,"CBRT_OPER");
+                temp.type = REAL_TYPE;
+                temp.value = 0.0;
+                return temp;
+            }
+
+            temp = eval(p->data.function.opList);
+            temp.value = cbrt(temp.value);
+
+            return temp;
+
         case HYPOT_OPER:
-            temp = eval(p->data.function.op1);
-            temp2 = eval(p->data.function.op2);
+            if(countOperators(p->data.function.opList)<2){
+                errorMessages(3,"HYPOT_OPER");
+
+                temp.value = 0.0;
+                temp.type = REAL_TYPE;
+
+                return temp;
+
+            } else if(countOperators(p->data.function.opList)>2){
+                errorMessages(2,"HYPOT_OPER");
+            }
+            temp = eval(p->data.function.opList);
+            temp2 = eval(p->data.function.opList->next);
+
             temp3.value = hypot(temp.value,temp2.value);
             temp3.type = temp.type;
             return temp3;
+
         case PRINT:
-            temp = eval(p->data.function.op1);
-             if(temp.type == INTEGER_TYPE){
+            if(countOperators(p->data.function.opList)<= 0){
+                errorMessages(3,"PRINT_OPER");
+
+                temp.type = REAL_TYPE;
+                temp.value = 0.0;
+                return temp;
+            }
+
+            temp = eval(p->data.function.opList);
+            tracker = p->data.function.opList->next;
+
+            while(tracker!=NULL){
+                if(temp.type == INTEGER_TYPE){
                     printf("%d\n",(int)temp.value);
                 } else{
                     printf("%.2lf\n",temp.value);
                 }
+                tracker = tracker->next;
+                temp.value = eval(tracker->data.function.opList).value;
+            }
+
             return temp;
+
         default:
             temp.value = 0.0;
             temp.type = NO_TYPE;
@@ -403,14 +638,40 @@ RETURN_VALUE evalFunction(AST_NODE *p){
     }
 }
 
-/*AST_NODE* evalSymbol(AST_NODE* p){
-    SYMBOL_TABLE_NODE* temp;
-    RETURN_VALUE yes;
-    temp = resolveSymbol(p->data.symbol.name, p);
-    if (temp == NULL) {
-        puts("there is an error");
-        exit(1);
-    }
 
-    return temp->val;
-}*/
+AST_NODE* conformToList(AST_NODE* sExpression, AST_NODE* list){
+
+    AST_NODE* temp;
+    temp = list;
+    while (temp->next != NULL){
+        temp = temp->next;
+    }
+    temp->next = sExpression;
+    return list;
+}
+
+int countOperators(AST_NODE* list){
+    int i = 0;
+
+    AST_NODE* temp;
+    temp = list;
+
+    while (temp->next != NULL){
+        temp = temp->next;
+        i++;
+    }
+    i++;
+    return i;
+}
+
+void errorMessages(int errorCode, char* funcName){
+
+    //2-->too big
+    //3-->too small
+
+    if(errorCode == 2){
+        printf("Warning: too many parameters for function <%s>\n",funcName);
+    } else{
+        printf("ERROR: too few parameters for function <%s>\n",funcName);
+    }
+}
