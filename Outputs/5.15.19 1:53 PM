@@ -1,0 +1,41 @@
+/home/maddy/Desktop/ciLisp/cmake-build-debug/cilisp
+
+> ((let (integer a 1)(real b 2))(print a b 3)
+lex: LPAREN
+lex: LPAREN
+lex: LET
+lex: LPAREN
+lex: INTEGER_NUMBER
+lex: SYMBOL sval = a
+
+lex: INTEGER_NUMBER 1
+yacc: s_expr ::= INTEGER_NUMBER
+lex: RPAREN
+> lex: LPAREN
+lex: REAL_NUMBER
+lex: SYMBOL sval = b
+lex: INTEGER_NUMBER 2
+yacc: s_expr ::= INTEGER_NUMBER
+lex: RPAREN
+lex: RPAREN
+lex: LPAREN
+lex: FUNC sval = print
+lex: SYMBOL sval = a
+lex: SYMBOL sval = b
+lex: INTEGER_NUMBER 3
+yacc: s_expr ::= INTEGER_NUMBER
+lex: RPAREN
+yacc: s_expr_list ::= LPAREN FUNC expr RPAREN
+lex: EOL
+
+ERROR: syntax error
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+yacc: s_expr ::= error
+
+ERROR: unexpected token
+quit
+yacc: s_expr ::= QUIT
+
+Process finished with exit code 0
