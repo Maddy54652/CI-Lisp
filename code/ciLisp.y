@@ -12,7 +12,7 @@
 %token <sval> FUNC SYMBOL
 %token <dval> REAL_NUMBER INTEGER_NUMBER
 
-%type <astNode> s_expr f_expr number
+%type <astNode> s_expr number s_expr_list
 %type <symbolNode> let_elem let_section let_list
 
 %token LPAREN RPAREN LET EOL QUIT INTEGER REAL
@@ -29,14 +29,15 @@ program:
     };
 
 s_expr:
-    f_expr {
-        $$ = $1;
-    }
-    | SYMBOL {
+    SYMBOL {
         $$ = symbol($1);
     }
     | LPAREN let_section s_expr RPAREN {
         $$ = setSymbolTable($2,$3);
+    }
+    | LPAREN FUNC s_expr_list RPAREN {
+        fprintf(stderr, "yacc: s_expr_list ::= LPAREN FUNC expr RPAREN\n");
+        $$ = function($2, $3);
     }
     | number {
         $$ = $1;
@@ -51,15 +52,16 @@ s_expr:
         $$ = NULL;
     };
 
-f_expr:
-    LPAREN FUNC s_expr RPAREN {
-        fprintf(stderr, "yacc: s_expr ::= LPAREN FUNC expr RPAREN\n");
-        $$ = function($2, $3, NULL);
+s_expr_list:
+    s_expr s_expr_list{
+        $$ = conformToList($1,$2);
     }
-    | LPAREN FUNC s_expr s_expr RPAREN {
-        fprintf(stderr, "yacc: s_expr ::= LPAREN FUNC expr expr RPAREN\n");
-        $$ = function($2, $3, $4);
-    };
+    |s_expr{
+        $$ = $1;
+    }
+    | {
+        $$ = NULL;
+     };
 
 let_section:
     LPAREN LET let_list RPAREN{
