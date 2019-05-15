@@ -1,0 +1,19 @@
+/home/maddy/Desktop/ciLisp/cmake-build-debug/cilisp
+
+> (add 1 2 3 14)
+lex: LPAREN
+lex: FUNC sval = add
+lex: INTEGER_NUMBER 1
+yacc: s_expr ::= INTEGER_NUMBER
+lex: INTEGER_NUMBER 2
+yacc: s_expr ::= INTEGER_NUMBER
+lex: INTEGER_NUMBER 3
+yacc: s_expr ::= INTEGER_NUMBER
+lex: INTEGER_NUMBER 14
+yacc: s_expr ::= INTEGER_NUMBER
+lex: RPAREN
+yacc: s_expr_list ::= LPAREN FUNC expr RPAREN
+lex: EOL
+yacc: program ::= s_expr EOL
+q
+Process finished with exit code 139 (interrupted by signal 11: SIGSEGV)
