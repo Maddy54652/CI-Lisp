@@ -53,8 +53,7 @@ typedef struct {
 
 typedef struct {
     char *name;
-    struct ast_node *op1;
-    struct ast_node *op2;
+    struct ast_node *opList;
 } FUNCTION_AST_NODE;
 
 typedef struct symbol_ast_node{
@@ -83,11 +82,12 @@ typedef struct ast_node {
         FUNCTION_AST_NODE function;
         SYMBOL_AST_NODE symbol;
     } data;
+    struct ast_node *next;
 } AST_NODE;
 
 AST_NODE *number(double value, DATA_TYPE theType);
 
-AST_NODE *function(char *funcName, AST_NODE *op1, AST_NODE *op2);
+AST_NODE *function(char *funcName, AST_NODE *oplist);
 
 void freeNode(AST_NODE *p);
 
@@ -108,5 +108,11 @@ SYMBOL_TABLE_NODE* resolveSymbol(char* name,AST_NODE* node);
 //AST_NODE* evalSymbol(AST_NODE* p);
 
 RETURN_VALUE evalFunction(AST_NODE *p);
+
+AST_NODE* conformToList(AST_NODE* sExpression, AST_NODE* list);
+
+int countOperators(AST_NODE* list);
+
+void errorMessages(int errorCode, char* funcName);
 
 #endif
