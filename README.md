@@ -42,6 +42,9 @@ All problems with part 3 have been solved!! :D
 5.8.19
 Part 4 has been solved! I'm halfway done with the project! You don't understand how happy I am about it! I will now start on part 5.
 
+5.15.19
+Okay, so unfortunately, I don't think that I will end up past task 5 before the due date, but I feel happy that I got as far as I did. For some reason, the program won't print anything until after the user quits. I don't know why.
+
 Progress:
 TASK 1-COMPLETE
 TASK 2-COMPLETE
