@@ -1,0 +1,30 @@
+/home/maddy/Desktop/ciLisp/cmake-build-debug/cilisp
+(add 8 8)
+lex: LPAREN
+lex: FUNC sval = add
+lex: INTEGER_NUMBER 8
+yacc: s_expr ::= INTEGER_NUMBER
+lex: INTEGER_NUMBER 8
+yacc: s_expr ::= INTEGER_NUMBER
+lex: RPAREN
+yacc: s_expr_list ::= LPAREN FUNC expr RPAREN
+lex: EOL
+yacc: program ::= s_expr EOL
+(add 5 6)
+lex: LPAREN
+lex: FUNC sval = add
+lex: INTEGER_NUMBER 5
+yacc: s_expr ::= INTEGER_NUMBER
+lex: INTEGER_NUMBER 6
+yacc: s_expr ::= INTEGER_NUMBER
+lex: RPAREN
+yacc: s_expr_list ::= LPAREN FUNC expr RPAREN
+lex: EOL
+yacc: program ::= s_expr EOL
+quit
+
+yacc: s_expr ::= QUIT
+> 16.000000
+> 11.000000
+> 
+Process finished with exit code 0
